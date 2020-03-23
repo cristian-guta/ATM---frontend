@@ -1,0 +1,26 @@
+<div class="mt-3 ml-auto mr-auto">
+
+    <div *ngIf="isAdmin()" class="pl-3 pr-3">
+        <button (click)="openModal()" class="btn btn-sm btn-primary">New subscription</button>
+    </div>
+    
+    <div class="card-body" *ngIf="!isAdmin()">
+        <h5 class="card-title">{{ subscription.name }}</h5>
+        <p class="card-text">Price: {{ subscription.price }} RON</p>
+        <p class="card-text" *ngFor="let benefit of subscription.benefits">{{ benefit.description }}</p>
+    </div>
+
+    <div class = "container" *ngIf="isAdmin()">
+        <div class="card-body" *ngFor="let sub of subscriptions">
+            <h5 class="card-title">{{ sub.name }}</h5>
+            <p class="card-text">Price: {{ sub.price }} RON</p>
+            <p class="card-text" *ngFor="let benefit of sub.benefits">{{ benefit.description }}</p>
+        </div>
+    </div>
+
+    
+    <!-- <div *ngIf="isAdmin()" class="card-footer d-flex">
+        <button (click)="openProductModal()" class="btn btn-sm btn-primary mr-auto">Edit product</button>
+        <button (click)="delete()" [disabled]="deleteLoading" class="btn btn-sm btn-danger">Delete product</button>
+    </div> -->
+</div>

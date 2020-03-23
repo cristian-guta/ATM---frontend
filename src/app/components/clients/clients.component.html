@@ -1,0 +1,40 @@
+<div class="table-wrapper">
+    <table class="w-fit table table-bordered mt-3 mr-auto ml-auto">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center">#</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let client of clients; let i = index;">
+                <td class="text-center align-middle">{{ i + 1 }}</td>
+                <td class="align-middle">{{ client.firstName | emptyString }}</td>
+                <td class="align-middle">{{ client.lastName | emptyString }}</td>
+                <td class="align-middle">{{ client.username }}</td>
+                <td class="align-middle">{{ client.email }}</td>
+                <td class="align-middle">{{ client.address | emptyString }}</td>
+                <td class="text-center align-middle">
+                    <button *ngIf="!client.deactivate" class="btn btn-sm btn-outline-danger" (click)="deactivate(client)"
+                        [disabled]="client.deleting"><i [ngClass]="{
+                        'far fa-times-circle': !client.deleting,
+                        'fas fa-spinner fa-spin': client.deleting
+                    }"></i> Block account</button>
+                    <button *ngIf="client.deactivate" class="btn btn-sm btn-outline-success" (click)="activate(client)"
+                        [disabled]="client.deleting"><i [ngClass]="{
+                        'far fa-times-circle fa-rotate-45': !client.deleting,
+                        'fas fa-spinner fa-spin': client.deleting
+                    }"></i> Unblock account</button>
+                </td>
+            </tr>
+            <tr *ngIf="clients.length === 0">
+                <td colspan="6" class="text-center">There are no clients.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,22 @@
+<div class="table-wrapper">
+    <table class="w-fit table table-bordered mt-3 mr-auto ml-auto">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center">#</th>
+                
+                <th>Description</th>
+                
+                <!-- <th class="text-center">Actions</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let benefit of benefits; let i = index;">
+                <td class="text-center align-middle">{{ i + 1 }}</td>
+                <td class="align-middle">{{ benefit.description }}</td>
+            </tr>
+            <tr *ngIf="benefits.length === 0">
+                <td colspan="6" class="text-center">There are no benefits.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
