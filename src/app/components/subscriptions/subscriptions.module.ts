@@ -7,10 +7,12 @@ import { SubscriptionsRoutingModule } from './subscriptions-routing.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SubscriptionModalComponent } from 'src/app/modals/subscription-modal/subscription-modal.component';
+import { SubscriptionCardComponent } from './subscription-card/subscription-card/subscription-card.component';
 
 @NgModule({
     declarations: [
-        SubscriptionsComponent,     
+        SubscriptionsComponent,
+        SubscriptionCardComponent,     
     ],
     imports: [
         CommonModule,

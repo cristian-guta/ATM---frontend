@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BenefitEndpoints } from '../endpoints/benefit-endpoints';
 import { RestService } from './rest.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ export class BenefitService{
 
     constructor(private rest: RestService){}
 
-    getBenefitsBySub(id: number){
+    getBenefitsBySub(id: number): Observable<any>{
         return this.rest.get(this.benefitEnds.getBenefitsBySubscription(id));
     }
 

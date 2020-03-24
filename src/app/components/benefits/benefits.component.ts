@@ -4,6 +4,7 @@ import { BenefitService } from 'src/app/services/benefit.service';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Benefit } from 'src/app/models/benefit';
 
+
 @Component({
   selector: 'app-benefits',
   templateUrl: './benefits.component.html',
@@ -20,8 +21,9 @@ export class BenefitsComponent implements OnInit {
     private _route: ActivatedRoute
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this._router.events.subscribe(event => {
+      console.log(event)
       if (event instanceof NavigationEnd && event.url === '/subscription') {
           this.getBenefits();
       }
@@ -34,12 +36,21 @@ export class BenefitsComponent implements OnInit {
   }
 
   getBenefits(){
+    
     const url = this._router.url;
-    if (url.indexOf('/subscription') > -1){
+    
+
+
+    if (url.indexOf('/subscription') > -1 || !this.isAdmin()){
+      
       let subscriptionId = this._route.snapshot.params.id;
+      
       if (subscriptionId === undefined) {
+        // subscriptionId = 1
+        
         subscriptionId = url.split('/')[url.split('/').length - 1];
       }
+      
       this.benefitService.getBenefitsBySub(subscriptionId)
           .subscribe((result: Benefit[]) => {
             this.benefits = result;
