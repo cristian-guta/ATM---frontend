@@ -14,9 +14,11 @@ import { SubscriptionModalComponent } from 'src/app/modals/subscription-modal/su
 export class SubscriptionCardComponent implements OnInit {
 
   @Input() subscription: Subscription;
+  @Input() subscriptions: Subscription[];
   @Output() deleteAction = new EventEmitter();
   modalRef: BsModalRef;
   deleteLoading = false;
+  isActivated = false;
 
   constructor(
     private _auth: AuthenticationService,
@@ -27,6 +29,19 @@ export class SubscriptionCardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if(!this.isAdmin()){
+      this.subscriptionService.getSubscription().subscribe(
+        data => {this.subscription = data}
+      )
+      if(this.subscription!==null){
+        this.isActivated=true;
+      }
+    }
+    else{
+      this.subscriptionService.getAllSubscriptions().subscribe(
+        data => {this.subscriptions = data}
+      )
+    }
   }
 
   isAdmin(): boolean {
@@ -40,6 +55,13 @@ export class SubscriptionCardComponent implements OnInit {
         this.subscription.price = subscription.price;
         this.subscription.benefits = subscription.benefits;
     });
+  }
+
+  activate(){
+
+  }
+  deactivate(){
+
   }
 
   delete() {

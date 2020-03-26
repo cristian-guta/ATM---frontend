@@ -1,8 +1,8 @@
 export class BenefitEndpoints{
     allBenefits = 'benefits';
-    bySubscription = 'benefits/subscription';
+    // bySubscription = 'benefits/bySubscription';
 
-    getBenefitsBySubscription(id : number): string{
-        return this.bySubscription + '/' + id;
-    }
+    // getBenefitsBySubscription(id : number): string{
+    //     return this.bySubscription + '/' + id;
+    // }
 }

@@ -9,16 +9,7 @@ const routes: Routes = [
         component: BenefitsComponent,
         data: {
             title: 'Benefits'
-        },
-        children: [
-            {
-                path: 'subscription/:id',
-                component: BenefitsComponent,
-                data: {
-                    title: 'Benefits'
-                }
-            }
-        ]
+        }
     }
 ];
 

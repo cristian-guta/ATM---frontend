@@ -29,7 +29,7 @@ export class SubscriptionsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if(this.isAdmin()){
+    if(this.isAdmin() || this.isAnonymous()){
       this.subsService.getAllSubscriptions().subscribe(
         data => {this.subscriptions = data}
       )
@@ -50,6 +50,10 @@ export class SubscriptionsComponent implements OnInit {
 
   isAdmin() {
     return this._auth.getRole().includes('ADMIN');
+  }
+
+  isAnonymous(){
+    return this._auth.getRole().includes('ANONYMOUS');
   }
 
   removeSubscription(subscription){

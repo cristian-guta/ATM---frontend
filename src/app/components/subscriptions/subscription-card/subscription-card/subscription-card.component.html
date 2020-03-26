@@ -4,9 +4,14 @@
         <p class="card-text">Price: {{ subscription.price }} RON</p>
         <p> Beneficii</p>
         <p class="card-text" *ngFor="let benefit of subscription.benefits">{{ benefit.description }}</p>
+        
     </div>
     <div *ngIf="isAdmin()" class="card-footer d-flex">
         <button (click)="openSubscriptionModal()" class="btn btn-sm btn-primary mr-auto">Edit subscription</button>
         <button (click)="delete()" [disabled]="deleteLoading" class="btn btn-sm btn-danger">Delete subscription</button>
+    </div>
+    <div *ngIf="!isAdmin()" class="card-footer d-flex">
+        <button *ngIf="!isActivated" (click)="activate()" [disabled]="deleteLoading" class="btn btn-sm btn-primary mr-auto">Activate subscription</button>
+        <button *ngIf="isActivated" (click)="deactivate()" [disabled]="deleteLoading" class="btn btn-sm btn-primary mr-auto">Deactivate subscription</button>
     </div>
 </div>

@@ -3,6 +3,9 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { BenefitService } from 'src/app/services/benefit.service';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Benefit } from 'src/app/models/benefit';
+import { Subscription } from 'src/app/models/subscription';
+import { SubscriptionService } from 'src/app/services/subscription.service';
+import { SubscriptionsComponent } from '../subscriptions/subscriptions.component';
 
 
 @Component({
@@ -13,48 +16,21 @@ import { Benefit } from 'src/app/models/benefit';
 export class BenefitsComponent implements OnInit {
 
   benefits: Benefit[] = [];
+  subscription: Subscription;
 
   constructor(
     private _auth: AuthenticationService,
     private benefitService: BenefitService,
+    private subscriptionService: SubscriptionService,
     private _router: Router,
     private _route: ActivatedRoute
   ) { }
 
-  ngOnInit() {
-    this._router.events.subscribe(event => {
-      console.log(event)
-      if (event instanceof NavigationEnd && event.url === '/subscription') {
-          this.getBenefits();
-      }
-  });
-  this.getBenefits();
-  }
-
-  isAdmin() {
-    return this._auth.getRole().includes('ADMIN');
-  }
-
-  getBenefits(){
-    
-    const url = this._router.url;
-    
-
-
-    if (url.indexOf('/subscription') > -1 || !this.isAdmin()){
-      
-      let subscriptionId = this._route.snapshot.params.id;
-      
-      if (subscriptionId === undefined) {
-        // subscriptionId = 1
-        
-        subscriptionId = url.split('/')[url.split('/').length - 1];
-      }
-      
-      this.benefitService.getBenefitsBySub(subscriptionId)
-          .subscribe((result: Benefit[]) => {
-            this.benefits = result;
-          });
+  ngOnInit() {   
+    if(!this.isAdmin()){
+      this.subscriptionService.getSubscription().subscribe((sub: Subscription) => {
+        this.benefits = sub.benefits;
+      })
     }
     else{
       this.benefitService.getAllBenefits()
@@ -62,6 +38,10 @@ export class BenefitsComponent implements OnInit {
             this.benefits = result;
           });
     }
+  }
+
+  isAdmin() {
+    return this._auth.getRole().includes('ADMIN');
   }
 
 }

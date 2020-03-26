@@ -10,8 +10,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UiSwitchModule } from 'ngx-ui-switch';
-import { LoginComponent } from './authentication/login/login.component';
-import { RegisterComponent } from './authentication/register/register.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AccountInformationComponent } from './modals/account-information/account-information.component';
 import { SubscriptionModalComponent } from './modals/subscription-modal/subscription-modal.component';
@@ -56,7 +54,8 @@ export function tokenGetter() {
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    AccountInformationComponent
+    AccountInformationComponent,
+    SubscriptionModalComponent 
 ]
 })
 export class AppModule { }

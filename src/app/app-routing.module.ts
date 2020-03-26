@@ -5,15 +5,15 @@ import { AuthGuard } from './guards/auth.guard';
 
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: 'subscriptions',
-  //   pathMatch: 'full',
-  //   canActivate: [AuthGuard],
-  //   data: {
-  //       roles: ['USER', 'ADMIN']
-  //   }
-  // },
+  {
+    path: '',
+    redirectTo: 'subscriptions',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: {
+        roles: ['ANONYMOUS', 'USER', 'ADMIN']
+    }
+  },
   {
     path: '',
     loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule),

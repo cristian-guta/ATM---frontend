@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { BenefitsComponent } from './benefits.component';
 import { CommonModule } from '@angular/common';
 import { BenefitsRoutingModule } from './benefits-routing.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -9,7 +10,8 @@ import { BenefitsRoutingModule } from './benefits-routing.module';
     ],
     imports: [
         CommonModule,
-        BenefitsRoutingModule
+        BenefitsRoutingModule,
+        FormsModule,
     ]
 })
 export class BenefitsModule{}
