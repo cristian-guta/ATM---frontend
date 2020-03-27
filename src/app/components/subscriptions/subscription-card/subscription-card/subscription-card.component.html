@@ -2,7 +2,7 @@
     <div class="card-body">
         <h3 class="card-title">{{ subscription.name }}</h3>
         <p class="card-text">Price: {{ subscription.price }} RON</p>
-        <p> Beneficii</p>
+        <p> Benefits</p>
         <p class="card-text" *ngFor="let benefit of subscription.benefits">{{ benefit.description }}</p>
         
     </div>

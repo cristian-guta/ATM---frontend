@@ -5,6 +5,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { SubscriptionModalComponent } from 'src/app/modals/subscription-modal/subscription-modal.component';
+import { SubscriptionsComponent } from '../../subscriptions.component';
 
 @Component({
   selector: 'app-subscription-card',
@@ -14,7 +15,6 @@ import { SubscriptionModalComponent } from 'src/app/modals/subscription-modal/su
 export class SubscriptionCardComponent implements OnInit {
 
   @Input() subscription: Subscription;
-  @Input() subscriptions: Subscription[];
   @Output() deleteAction = new EventEmitter();
   modalRef: BsModalRef;
   deleteLoading = false;
@@ -28,24 +28,15 @@ export class SubscriptionCardComponent implements OnInit {
 
   ) { }
 
-  ngOnInit(): void {
-    if(!this.isAdmin()){
-      this.subscriptionService.getSubscription().subscribe(
-        data => {this.subscription = data}
-      )
-      if(this.subscription!==null){
-        this.isActivated=true;
-      }
-    }
-    else{
-      this.subscriptionService.getAllSubscriptions().subscribe(
-        data => {this.subscriptions = data}
-      )
-    }
+  ngOnInit() {
   }
 
   isAdmin(): boolean {
     return this._auth.getRole().includes('ADMIN');
+  }
+
+  isUser(){
+    return this._auth.getRole().includes('USER');
   }
 
   openSubscriptionModal() {
@@ -59,9 +50,11 @@ export class SubscriptionCardComponent implements OnInit {
 
   activate(){
 
+    this.isActivated = true;
   }
   deactivate(){
 
+    this.isActivated = false;
   }
 
   delete() {

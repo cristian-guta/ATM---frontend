@@ -16,7 +16,7 @@ export class AccountsComponent implements OnInit {
 
   constructor(
     private _auth: AuthenticationService,
-    private _productService: AccountService,
+    private _accountService: AccountService,
     private _router: Router,
     private _route: ActivatedRoute
   ) { }
@@ -32,7 +32,7 @@ export class AccountsComponent implements OnInit {
 
   getAccounts(){
     const url = this._router.url;
-    this._productService.getAccountByCNP()
+    this._accountService.getAccountByCNP()
                 .subscribe((result: Account[]) => {
                     this.accounts = result;
                     this.loading = false;

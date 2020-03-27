@@ -15,9 +15,11 @@ import { SubscriptionModalComponent } from 'src/app/modals/subscription-modal/su
 })
 export class SubscriptionsComponent implements OnInit {
 
-  subscription = new Subscription();
-  subscriptions: Subscription[] = [];
+  // subscription = new Subscription();
+  public subscription: Subscription;
+  public subscriptions: Subscription[] = [];
   modalRef: BsModalRef;
+  public isActivated: boolean;
 
   constructor(
     private _auth: AuthenticationService,
@@ -27,18 +29,24 @@ export class SubscriptionsComponent implements OnInit {
     
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(){
+    this.isActivated=false;
+    this.getSubscriptions();
+  }
 
-    if(this.isAdmin() || this.isAnonymous()){
-      this.subsService.getAllSubscriptions().subscribe(
-        data => {this.subscriptions = data}
-      )
-    }
-    else{
-      this.subsService.getSubscription().subscribe(
-        data => {this.subscription = data}
-      )
-    }
+  getSubscriptions(){
+
+    this.subsService.getAllSubscriptions().subscribe((subs: Subscription[]) => {
+      this.subscriptions = subs;
+    });
+        
+    this.subsService.getSubscription().subscribe((sub: Subscription) => {
+      this.subscription=sub;
+      if(sub){
+        this.isActivated=true;
+      }
+    });
+    
   }
 
   openModal() {
@@ -54,6 +62,10 @@ export class SubscriptionsComponent implements OnInit {
 
   isAnonymous(){
     return this._auth.getRole().includes('ANONYMOUS');
+  }
+
+  isUser(){
+    return this._auth.getRole().includes('USER');
   }
 
   removeSubscription(subscription){
