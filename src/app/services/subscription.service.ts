@@ -21,6 +21,10 @@ export class SubscriptionService{
         return this.rest.get(this.subscriptionEnds.allAvailableSubscriptions);
     }
 
+    cancelSubscription(){
+        return this.rest.delete(this.subscriptionEnds.cancelSubscription);
+    }
+
     updateSubscription(subscription: Subscription){
         return this.rest.put(this.subscriptionEnds.getUpdate(subscription), subscription);
     }

@@ -36,7 +36,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
         roles: ['ANONYMOUS', 'USER', 'ADMIN']
-    }
+    },
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'benefits',

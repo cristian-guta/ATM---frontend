@@ -11,7 +11,7 @@
         <button (click)="delete()" [disabled]="deleteLoading" class="btn btn-sm btn-danger">Delete subscription</button>
     </div>
     <div *ngIf="!isAdmin()" class="card-footer d-flex">
-        <button *ngIf="!isActivated" (click)="activate()" [disabled]="deleteLoading" class="btn btn-sm btn-primary mr-auto">Activate subscription</button>
-        <button *ngIf="isActivated" (click)="deactivate()" [disabled]="deleteLoading" class="btn btn-sm btn-primary mr-auto">Deactivate subscription</button>
+        <button *ngIf="!hasSubscription" (click)="activate()" [disabled]="deleteLoading" class="btn btn-sm btn-primary mr-auto">Activate subscription</button>
+        <button *ngIf="hasSubscription" (click)="deactivate()" [disabled]="deleteLoading" class="btn btn-sm btn-primary mr-auto">Deactivate subscription</button>
     </div>
 </div>

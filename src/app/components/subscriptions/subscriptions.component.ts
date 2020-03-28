@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'src/app/models/subscription';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SubscriptionModalComponent } from 'src/app/modals/subscription-modal/subscription-modal.component';
 
@@ -21,18 +21,22 @@ export class SubscriptionsComponent implements OnInit {
   modalRef: BsModalRef;
   public isActivated: boolean;
 
+
   constructor(
     private _auth: AuthenticationService,
     private subsService: SubscriptionService,
     private _router: Router,
     private _modal: BsModalService,
+
     
-  ) { }
+  ) {}
 
   ngOnInit(){
     this.isActivated=false;
     this.getSubscriptions();
   }
+
+
 
   getSubscriptions(){
 
