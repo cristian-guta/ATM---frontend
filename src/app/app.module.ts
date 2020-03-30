@@ -14,6 +14,10 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AccountInformationComponent } from './modals/account-information/account-information.component';
 import { SubscriptionModalComponent } from './modals/subscription-modal/subscription-modal.component';
 import { MatSelectModule } from '@angular/material/select';
+import { BankAccountModalComponent } from './modals/bank-account-modal/bank-account-modal.component';
+import { AccountDepositModalComponent } from './modals/account-deposit-modal/account-deposit-modal.component';
+import { AccountWithdrawModalComponent } from './modals/account-withdraw-modal/account-withdraw-modal.component';
+import { TransferMoneyModalComponent } from './modals/transfer-money-modal/transfer-money-modal.component';
 
 export function tokenGetter() {
   if (sessionStorage.getItem('jwt')) {
@@ -26,7 +30,7 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,   
-    AccountInformationComponent, SubscriptionModalComponent 
+    AccountInformationComponent, SubscriptionModalComponent, BankAccountModalComponent, AccountDepositModalComponent, AccountWithdrawModalComponent, TransferMoneyModalComponent 
   ],
   imports: [
       BrowserModule,

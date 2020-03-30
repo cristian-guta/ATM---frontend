@@ -39,7 +39,8 @@
               <a routerLinkActive="active" routerLink="/subscriptions" class="nav-item nav-link" *ngIf="isAdmin()">Subscriptions</a>
               <a routerLinkActive="active" routerLink="/subscriptions" class="nav-item nav-link" *ngIf="!isAdmin()">My subscription</a>
               <a routerLinkActive="active" routerLink="/benefits" class="nav-item nav-link">Benefits</a>
-              <a routerLinkActive="active" routerLink="/accounts" class="nav-item nav-link">My accounts</a>
+              <a routerLinkActive="active" routerLink="/accounts" *ngIf="!isAdmin()" class="nav-item nav-link">My accounts</a>
+              <a routerLinkActive="active" routerLink="/accounts" *ngIf="isAdmin()" class="nav-item nav-link">Accounts</a>
               <a *ngIf="isAdmin()" routerLinkActive="active" routerLink="/clients" class="nav-item nav-link">Clients</a>
           </div>
           <span *ngIf="currentUser" (click)="logout()" class="logout nav-item nav-link cursor-pointer">Logout</span>

@@ -1,4 +1,5 @@
 <div class="table-wrapper">
+    <button *ngIf = "!isAdmin()" (click)="openModal()" class="btn btn-sm btn-primary">New account</button>
     <table class="w-fit table table-bordered mt-3 mr-auto ml-auto">
         <thead class="thead-dark">
             <tr>
@@ -6,19 +7,41 @@
                 
                 <th>Name</th>
                 <th>Amount</th>
+                <th>Details</th>
+                <th *ngIf="isAdmin()">Owner's CNP</th>
+                <th *ngIf="!isAdmin()">Operations</th>
                 
                 <!-- <th class="text-center">Actions</th> -->
             </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="!isAdmin()">
             <tr *ngFor="let account of accounts; let i = index;">
                 <td class="text-center align-middle">{{ i + 1 }}</td>
                 <td class="align-middle">{{ account.name }}</td>
                 <td class="align-middle">{{ account.amount }}</td>
+                <td class="align-middle">{{ account.details }}</td>
+                <td class="align-middle example-button-row">
+                    <button mat-flat-button color="accent" (click)="delete(account)">Delete</button>
+                    <button mat-flat-button color="accent" (click)="deposit(account)">Deposit</button>
+                    <button mat-flat-button color="accent" (click)="withdraw(account)">Withdraw</button>
+                    <button mat-flat-button color="accent" (click)="transfer(account)">Transfer</button>
+                </td>
             </tr>
             <tr *ngIf="accounts.length === 0">
                 <td colspan="6" class="text-center">There are no accounts.</td>
             </tr>
         </tbody>
-    </table>
+        <tbody *ngIf="isAdmin()">
+            <tr *ngFor="let account of allAccounts; let i = index;">
+                <td class="text-center align-middle">{{ i + 1 }}</td>
+                <td class="align-middle">{{ account.name }}</td>
+                <td class="align-middle">{{ account.amount }}</td>
+                <td class="align-middle">{{ account.details }}</td>
+                <td class="align-middle">{{ account.client.cnp }}</td>
+            </tr>
+            <tr *ngIf="allAccounts.length === 0">
+                <td colspan="6" class="text-center">There are no accounts.</td>
+            </tr>
+        </tbody> 
+    </table>    
 </div>

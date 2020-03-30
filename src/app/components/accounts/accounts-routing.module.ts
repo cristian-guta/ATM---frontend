@@ -9,15 +9,6 @@ const routes: Routes = [
         data: {
             title: 'Accounts'
         },
-        // children: [
-        //     {
-        //         path: 'account/:id',
-        //         component: AccountsComponent,
-        //         data: {
-        //             title: 'Accounts'
-        //         }
-        //     }
-        // ]
     }
   ];
 

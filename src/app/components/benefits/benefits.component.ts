@@ -6,6 +6,8 @@ import { Benefit } from 'src/app/models/benefit';
 import { Subscription } from 'src/app/models/subscription';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 import { SubscriptionsComponent } from '../subscriptions/subscriptions.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BankAccountModalComponent } from 'src/app/modals/bank-account-modal/bank-account-modal.component';
 
 
 @Component({
@@ -17,13 +19,13 @@ export class BenefitsComponent implements OnInit {
 
   benefits: Benefit[] = [];
   subscription: Subscription;
+  
 
   constructor(
     private _auth: AuthenticationService,
     private benefitService: BenefitService,
     private subscriptionService: SubscriptionService,
-    private _router: Router,
-    private _route: ActivatedRoute
+    
   ) { }
 
   ngOnInit() {   
@@ -43,5 +45,7 @@ export class BenefitsComponent implements OnInit {
   isAdmin() {
     return this._auth.getRole().includes('ADMIN');
   }
+
+  
 
 }

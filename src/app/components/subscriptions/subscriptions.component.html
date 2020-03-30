@@ -11,18 +11,14 @@
 
     <div *ngIf="!isAdmin()">
         <div *ngIf="isActivated">
-            
             <app-subscription-card [subscription]="subscription"
                 class="pt-3 pb-3 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
             </app-subscription-card>
         </div>
-
         <div *ngIf="!isActivated">
-        
             <app-subscription-card *ngFor="let sub of subscriptions" [subscription]="sub"
                 class="pt-3 pb-3 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
             </app-subscription-card>
         </div>
     </div>
-
 </div>

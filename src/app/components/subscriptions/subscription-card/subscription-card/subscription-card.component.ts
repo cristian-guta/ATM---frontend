@@ -21,21 +21,21 @@ export class SubscriptionCardComponent implements OnInit {
   deleteLoading = false;
   hasSubscription: boolean = false;
   
-  
-
   constructor(
     private _auth: AuthenticationService,
     private subscriptionService: SubscriptionService,
     private _modal: BsModalService,
     private _toast: ToastService,
-    private router: Router
   ) {}
 
   ngOnInit() {
     this.subscriptionService.getSubscription().subscribe((sub: Subscription) => {
-      this.subscription = sub;
+      
       if(sub){
         this.hasSubscription = true;
+      }
+      else{
+        this.hasSubscription = false;
       }
     })
   }

@@ -13,19 +13,42 @@ export class AccountService{
         private rest: RestService,
     ){}
 
-    getAccountByCNP(): Observable<any>{
+    currAcct: Account;
+
+    getAccountByCNP(){
         return this.rest.get(this.accountEnds.accountsByCNP);
     }
 
-    getAccount(account: Account): Observable<any>{
-        return this.rest.get(this.accountEnds.getAccount(account.id));
+    getAccount(id: number){
+        return this.rest.get(this.accountEnds.getAccount(id));
     }
 
-    createAccount(account: Account): Observable<any>{
+    getAllAccounts(){
+        return this.rest.get(this.accountEnds.allAccounts);
+    }
+
+    createAccount(account: Account){
         return this.rest.post(this.accountEnds.create, account);
     }
 
-    deleteAccount(account: Account): Observable<any>{
+    deleteAccount(account: Account){
         return this.rest.delete(this.accountEnds.getDelete(account.id));
     }
+
+    updateAccount(account: Account){
+        return this.rest.put(this.accountEnds.getUpdate(account), account);
+    }
+
+    depositMoney(id: number, amount: number){
+        return this.rest.put(this.accountEnds.getDeposit(id, amount), {id, amount});
+    }
+
+    withdrawMoney(id: number, amount: number){
+        return this.rest.put(this.accountEnds.getWithdraw(id, amount), {id, amount});
+    }
+
+    transferMoney(senderAccountId: number, receiverAccountId: number, amount: number){
+        return this.rest.put(this.accountEnds.getTransfer(senderAccountId, receiverAccountId, amount), {senderAccountId, receiverAccountId, amount});
+    }
+
 }

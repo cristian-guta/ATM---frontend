@@ -165,6 +165,11 @@ body {
     z-index: 9999 !important;
 }
 
+.example-button-row button,
+.example-button-row a {
+  margin-right: 8px;
+}
+
 @media screen and (max-width: 425px) {
     .navbar-brand {
         display: flex;

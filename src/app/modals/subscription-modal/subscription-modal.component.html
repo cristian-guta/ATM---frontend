@@ -33,16 +33,6 @@
               <small *ngIf="isInvalid('benefits')" class="form-text text-danger">At least one benefit must be
                 selected.</small>
         </div>
-        <!-- <div class="form-group">
-            <div class="input-group">
-                <select formControlName="benefits" [class.is-invalid]="isInvalid('benefits')"
-                    [class.is-valid]="isValid('benefits')" multiple class="form-control">
-                    <option *ngFor="let benefit of benefitsList" [value]="benefit.id">{{ benefit.description }}</option>
-                </select>
-            </div>
-            <small *ngIf="isInvalid('benefits')" class="form-text text-danger">At least one benefit must be
-                selected.</small>
-        </div> -->
         <div class="form-group mb-0">
             <input  type="submit" [value]="subscription ? 'Save changes' : 'Create'"
                  class="btn btn-sm btn-success" > 

@@ -21,14 +21,11 @@ export class SubscriptionsComponent implements OnInit {
   modalRef: BsModalRef;
   public isActivated: boolean;
 
-
   constructor(
     private _auth: AuthenticationService,
     private subsService: SubscriptionService,
     private _router: Router,
-    private _modal: BsModalService,
-
-    
+    private _modal: BsModalService
   ) {}
 
   ngOnInit(){
@@ -36,12 +33,11 @@ export class SubscriptionsComponent implements OnInit {
     this.getSubscriptions();
   }
 
-
-
   getSubscriptions(){
 
     this.subsService.getAllSubscriptions().subscribe((subs: Subscription[]) => {
       this.subscriptions = subs;
+      
     });
         
     this.subsService.getSubscription().subscribe((sub: Subscription) => {
@@ -50,7 +46,6 @@ export class SubscriptionsComponent implements OnInit {
         this.isActivated=true;
       }
     });
-    
   }
 
   openModal() {
@@ -58,7 +53,7 @@ export class SubscriptionsComponent implements OnInit {
     this.modalRef.content.onClose.subscribe((subscription: Subscription) => {
         this.subscriptions.push(subscription);
     });
-}
+  }
 
   isAdmin() {
     return this._auth.getRole().includes('ADMIN');

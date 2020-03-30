@@ -8,6 +8,7 @@
                 <th>Username</th>
                 <th>Email</th>
                 <th>Address</th>
+                <th>CNP</th>
                 <th class="text-center">Actions</th>
             </tr>
         </thead>
@@ -19,6 +20,7 @@
                 <td class="align-middle">{{ client.username }}</td>
                 <td class="align-middle">{{ client.email }}</td>
                 <td class="align-middle">{{ client.address | emptyString }}</td>
+                <td class="align-middle">{{ client.cnp | emptyString }}</td>
                 <td class="text-center align-middle">
                     <button *ngIf="!client.deactivate" class="btn btn-sm btn-outline-danger" (click)="deactivate(client)"
                         [disabled]="client.deleting"><i [ngClass]="{
