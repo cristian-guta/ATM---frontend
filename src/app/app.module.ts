@@ -18,6 +18,11 @@ import { BankAccountModalComponent } from './modals/bank-account-modal/bank-acco
 import { AccountDepositModalComponent } from './modals/account-deposit-modal/account-deposit-modal.component';
 import { AccountWithdrawModalComponent } from './modals/account-withdraw-modal/account-withdraw-modal.component';
 import { TransferMoneyModalComponent } from './modals/transfer-money-modal/transfer-money-modal.component';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 export function tokenGetter() {
   if (sessionStorage.getItem('jwt')) {
@@ -47,7 +52,11 @@ export function tokenGetter() {
       ModalModule.forRoot(),
       ReactiveFormsModule,
       UiSwitchModule,
-      MatSelectModule
+      MatSelectModule,
+      MatPaginatorModule,
+      MatSortModule,
+      MatTableModule,
+
   ],
   providers: [
     {
@@ -60,6 +69,10 @@ export function tokenGetter() {
   entryComponents: [
     AccountInformationComponent,
     SubscriptionModalComponent 
+],
+exports: [
+  MatButtonModule,
+  MatButtonToggleModule,
 ]
 })
 export class AppModule { }

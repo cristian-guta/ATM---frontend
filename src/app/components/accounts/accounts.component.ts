@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Account } from 'src/app/models/account';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AccountService } from 'src/app/services/account.service';
@@ -10,6 +10,9 @@ import { AccountDepositModalComponent } from 'src/app/modals/account-deposit-mod
 import { AccountWithdrawModalComponent } from 'src/app/modals/account-withdraw-modal/account-withdraw-modal.component';
 import { Client } from 'src/app/models/client';
 import { TransferMoneyModalComponent } from 'src/app/modals/transfer-money-modal/transfer-money-modal.component';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-accounts',
@@ -18,9 +21,15 @@ import { TransferMoneyModalComponent } from 'src/app/modals/transfer-money-modal
 })
 export class AccountsComponent implements OnInit {
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  allAccounts = new MatTableDataSource<Account>();
+  
+  displayColumnsAdmin: string[];
+  
+
   loading = true;
-  accounts: Account[] = [];
-  allAccounts: Account[] = [];
   modalRef: BsModalRef;
   clients: Client[] = [];
 
@@ -32,27 +41,43 @@ export class AccountsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
-    this.getAllAccounts();
+    this.allAccounts.paginator = this.paginator
+    if(this.isAdmin()){
+      this.displayColumnsAdmin = ['id', 'name', 'amount', 'details', 'owner'];
+    }
+    else{
+      this.displayColumnsAdmin = ['id', 'name', 'amount', 'details', 'operations'];
+    }
     this.getAccounts();    
   }
 
-  getAccounts(){
-    this._accountService.getAccountByCNP()
-                .subscribe((result: Account[]) => {
-                    this.accounts = result;
-                    this.loading = false;
-                });
+  ngAfterViewInit() {
+    this.allAccounts.paginator = this.paginator;
+    this.allAccounts.sort = this.sort;
   }
 
-  getAllAccounts(){
-    this._accountService.getAllAccounts().subscribe((accounts: Account[]) => {
-      this.allAccounts = accounts;
-      accounts.forEach(element => {
-        this.clients.push(element.client);
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.allAccounts.filter = filterValue;
+  }
+
+  getAccounts(){
+    if(!this.isAdmin()){
+      this._accountService.getAccountByCNP()
+                .subscribe((result: Account[]) => {
+                    this.allAccounts.data = result;
+                    this.loading = false;
+                });
+    }
+    else{
+      this._accountService.getAllAccounts().subscribe((accounts: Account[]) => {
+        this.allAccounts.data = accounts;
+        accounts.forEach(element => {
+          this.clients.push(element.client);
+        });
       });
-    });
-    
+    }
   }
 
   isAdmin() {
@@ -60,13 +85,13 @@ export class AccountsComponent implements OnInit {
   }
 
   removeAccount(account) {
-    this.accounts = this.accounts.filter((acc: Account) => acc.id !== account.id);
+    this.allAccounts.data = this.allAccounts.data.filter((acc: Account) => acc.id !== account.id);
   }
 
   openModal() {
     this.modalRef = this._modal.show(BankAccountModalComponent);
     this.modalRef.content.onClose.subscribe((account: Account) => {
-        this.accounts.push(account);
+        this.allAccounts.data.push(account);
     });
   }
 

@@ -1,4 +1,6 @@
 @import '~ngx-toastr/toastr';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@use '@material/button/mdc-button';
 
 * {
     -webkit-box-sizing: border-box;

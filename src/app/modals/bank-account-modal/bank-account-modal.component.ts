@@ -94,6 +94,7 @@ export class BankAccountModalComponent implements OnInit {
         });
         
     }
+    window.location.reload()
   }
   
   hideModal(): void {

@@ -1,47 +1,46 @@
-<div class="table-wrapper">
+<div>
     <button *ngIf = "!isAdmin()" (click)="openModal()" class="btn btn-sm btn-primary">New account</button>
-    <table class="w-fit table table-bordered mt-3 mr-auto ml-auto">
-        <thead class="thead-dark">
-            <tr>
-                <th class="text-center">#</th>
-                
-                <th>Name</th>
-                <th>Amount</th>
-                <th>Details</th>
-                <th *ngIf="isAdmin()">Owner's CNP</th>
-                <th *ngIf="!isAdmin()">Operations</th>
-                
-                <!-- <th class="text-center">Actions</th> -->
-            </tr>
-        </thead>
-        <tbody *ngIf="!isAdmin()">
-            <tr *ngFor="let account of accounts; let i = index;">
-                <td class="text-center align-middle">{{ i + 1 }}</td>
-                <td class="align-middle">{{ account.name }}</td>
-                <td class="align-middle">{{ account.amount }}</td>
-                <td class="align-middle">{{ account.details }}</td>
-                <td class="align-middle example-button-row">
-                    <button mat-flat-button color="accent" (click)="delete(account)">Delete</button>
-                    <button mat-flat-button color="accent" (click)="deposit(account)">Deposit</button>
-                    <button mat-flat-button color="accent" (click)="withdraw(account)">Withdraw</button>
-                    <button mat-flat-button color="accent" (click)="transfer(account)">Transfer</button>
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource] = "allAccounts" matSort>
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+                <th mat-cell *matCellDef="let account; let i=index">{{ i+1 }}</th>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                <th mat-cell *matCellDef="let account">{{ account.name }}</th>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+                <th mat-cell *matCellDef="let account">{{ account.amount }}</th>
+            </ng-container>
+
+            <ng-container matColumnDef="details">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Details</th>
+                <th mat-cell *matCellDef="let account">{{ account.details }}</th>
+            </ng-container>
+            
+            <ng-container  matColumnDef="owner">
+                <th mat-header-cell *matHeaderCellDef>Owner's CNP</th>
+                <th mat-cell *matCellDef="let account">{{ account.client.cnp }}</th>
+            </ng-container>
+
+            <ng-container matColumnDef="operations">
+                <th mat-header-cell *matHeaderCellDef>Operations</th>
+                <td mat-cell *matCellDef="let account" class="example-button-row">
+                    <button mat-stroked-button (click)="delete(account)">Delete</button>
+                    <button mat-stroked-button (click)="deposit(account)">Deposit</button>
+                    <button mat-stroked-button (click)="withdraw(account)">Withdraw</button>
+                    <button mat-stroked-button (click)="transfer(account)">Transfer</button> 
                 </td>
-            </tr>
-            <tr *ngIf="accounts.length === 0">
-                <td colspan="6" class="text-center">There are no accounts.</td>
-            </tr>
-        </tbody>
-        <tbody *ngIf="isAdmin()">
-            <tr *ngFor="let account of allAccounts; let i = index;">
-                <td class="text-center align-middle">{{ i + 1 }}</td>
-                <td class="align-middle">{{ account.name }}</td>
-                <td class="align-middle">{{ account.amount }}</td>
-                <td class="align-middle">{{ account.details }}</td>
-                <td class="align-middle">{{ account.client.cnp }}</td>
-            </tr>
-            <tr *ngIf="allAccounts.length === 0">
-                <td colspan="6" class="text-center">There are no accounts.</td>
-            </tr>
-        </tbody> 
-    </table>    
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayColumnsAdmin"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumnsAdmin;"></tr>
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
 </div>
