@@ -36,7 +36,12 @@ export class SubscriptionsComponent implements OnInit {
   getSubscriptions(){
 
     this.subsService.getAllSubscriptions().subscribe((subs: Subscription[]) => {
-      this.subscriptions = subs;
+      subs.forEach(s => {
+        if(s.deleted !== true){
+          this.subscriptions.push(s);
+        }
+      });
+      // this.subscriptions = subs;
       
     });
         

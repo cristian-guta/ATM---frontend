@@ -35,7 +35,7 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,   
-    AccountInformationComponent, SubscriptionModalComponent, BankAccountModalComponent, AccountDepositModalComponent, AccountWithdrawModalComponent, TransferMoneyModalComponent 
+    AccountInformationComponent, SubscriptionModalComponent, BankAccountModalComponent, AccountDepositModalComponent, AccountWithdrawModalComponent, TransferMoneyModalComponent,
   ],
   imports: [
       BrowserModule,

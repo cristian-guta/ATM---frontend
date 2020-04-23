@@ -1,7 +1,7 @@
 <div>
     <button *ngIf = "!isAdmin()" (click)="openModal()" class="btn btn-sm btn-primary">New account</button>
     <div class="mat-elevation-z8">
-        <table mat-table [dataSource] = "allAccounts" matSort>
+        <mat-table #table [dataSource] = "allAccounts" matSort>
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
                 <th mat-cell *matCellDef="let account; let i=index">{{ i+1 }}</th>
@@ -40,7 +40,7 @@
             <tr mat-header-row *matHeaderRowDef="displayColumnsAdmin"></tr>
             <tr mat-row *matRowDef="let row; columns: displayColumnsAdmin;"></tr>
 
-        </table>
+        </mat-table>
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
     </div>
 </div>

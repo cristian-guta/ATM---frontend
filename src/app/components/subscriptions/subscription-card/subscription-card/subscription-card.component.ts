@@ -88,6 +88,7 @@ export class SubscriptionCardComponent implements OnInit {
     this.deleteLoading = true;
     this.subscriptionService.deleteSubscription(this.subscription)
         .subscribe(() => {
+            this.subscription.deleted=true;
             this._toast.showSuccess('Subscription successfully deleted.');
             this.deleteAction.emit(this.subscription);
             this.deleteLoading = false;

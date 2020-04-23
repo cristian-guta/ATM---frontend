@@ -10,6 +10,7 @@
     </div>
 
     <div *ngIf="!isAdmin()">
+        <div *ngIf="subscription == null" class="m-3 alert alert-primary">There are no subscriptions.</div>
         <div *ngIf="isActivated">
             <app-subscription-card [subscription]="subscription"
                 class="pt-3 pb-3 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">

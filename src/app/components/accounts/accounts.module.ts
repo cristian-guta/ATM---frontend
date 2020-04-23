@@ -12,9 +12,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
-
-
-
 @NgModule({
   declarations: [
     AccountsComponent

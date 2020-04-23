@@ -42,6 +42,7 @@
               <a routerLinkActive="active" routerLink="/accounts" *ngIf="!isAdmin()" class="nav-item nav-link">My accounts</a>
               <a routerLinkActive="active" routerLink="/accounts" *ngIf="isAdmin()" class="nav-item nav-link">Accounts</a>
               <a *ngIf="isAdmin()" routerLinkActive="active" routerLink="/clients" class="nav-item nav-link">Clients</a>
+              <a routerLinkActive="active" routerLink="/operations" class="nav-item nav-link">Operations</a>
           </div>
           <span *ngIf="currentUser" (click)="logout()" class="logout nav-item nav-link cursor-pointer">Logout</span>
       </div>

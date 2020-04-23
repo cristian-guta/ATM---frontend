@@ -40,6 +40,15 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always'
   },
   {
+    path: 'operations',
+    loadChildren: () => import('./components/operations/operations.module').then(m => m.OperationsModule),
+    canActivate: [AuthGuard],
+    data: {
+        roles: ['ANONYMOUS', 'USER', 'ADMIN']
+    },
+    runGuardsAndResolvers: 'always'
+  },
+  {
     path: 'benefits',
     loadChildren: () => import('./components/benefits/benefits.module').then(m => m.BenefitsModule),
     canActivate: [AuthGuard],
