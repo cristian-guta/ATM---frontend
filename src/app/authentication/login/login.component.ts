@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Validators, FormBuilder, AbstractControl } from '@angular/forms';
+import { Validators, FormBuilder, AbstractControl, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-login',
@@ -11,12 +11,10 @@ import { Validators, FormBuilder, AbstractControl } from '@angular/forms';
 export class LoginComponent implements OnInit {
     validLogin = true;
     loading = false;
-    loginForm: AbstractControl;
+    loginForm: FormGroup;
 
     constructor(
         private _authService: AuthenticationService,
-        private _router: Router,
-        private _route: ActivatedRoute,
         private _fb: FormBuilder
     ) { }
 

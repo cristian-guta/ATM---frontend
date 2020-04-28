@@ -1,42 +1,53 @@
-<div class="table-wrapper">
-    <table class="w-fit table table-bordered mt-3 mr-auto ml-auto">
-        <thead class="thead-dark">
-            <tr>
-                <th class="text-center">#</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>CNP</th>
-                <th class="text-center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let client of clients; let i = index;">
-                <td class="text-center align-middle">{{ i + 1 }}</td>
-                <td class="align-middle">{{ client.firstName | emptyString }}</td>
-                <td class="align-middle">{{ client.lastName | emptyString }}</td>
-                <td class="align-middle">{{ client.username }}</td>
-                <td class="align-middle">{{ client.email }}</td>
-                <td class="align-middle">{{ client.address | emptyString }}</td>
-                <td class="align-middle">{{ client.cnp | emptyString }}</td>
-                <td class="text-center align-middle">
-                    <button *ngIf="!client.deactivate" class="btn btn-sm btn-outline-danger" (click)="deactivate(client)"
-                        [disabled]="client.deleting"><i [ngClass]="{
-                        'far fa-times-circle': !client.deleting,
-                        'fas fa-spinner fa-spin': client.deleting
-                    }"></i> Block account</button>
-                    <button *ngIf="client.deactivate" class="btn btn-sm btn-outline-success" (click)="activate(client)"
-                        [disabled]="client.deleting"><i [ngClass]="{
-                        'far fa-times-circle fa-rotate-45': !client.deleting,
-                        'fas fa-spinner fa-spin': client.deleting
-                    }"></i> Unblock account</button>
-                </td>
-            </tr>
-            <tr *ngIf="clients.length === 0">
-                <td colspan="6" class="text-center">There are no clients.</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="mat-elevation-z8">
+    <mat-table #table [dataSource] = "clients" matSort>
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <th mat-cell *matCellDef="let client; let i=index">{{ i+1 }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>First name</th>
+            <th mat-cell *matCellDef="let client">{{ client.firstName }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Last name</th>
+            <th mat-cell *matCellDef="let client">{{ client.lastName }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+            <th mat-cell *matCellDef="let client">{{ client.username }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+            <th mat-cell *matCellDef="let client">{{ client.email }}</th>
+        </ng-container>
+        
+        <ng-container  matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef>Address</th>
+            <th mat-cell *matCellDef="let client">{{ client.address }}</th>
+        </ng-container>
+
+        <ng-container  matColumnDef="cnp">
+            <th mat-header-cell *matHeaderCellDef>CNP</th>
+            <th mat-cell *matCellDef="let client">{{ client.cnp }}</th>
+        </ng-container>
+
+        <ng-container  matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let client" class="example-button-row">
+                <button mat-stroked-button *ngIf="!client.deactivate" (click)="deactivate(client)"
+                        [disabled]="client.deleting"> Block</button>
+                <button mat-stroked-button *ngIf="client.deactivate" (click)="activate(client)"
+                        [disabled]="client.deleting"> Unblock</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>

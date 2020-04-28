@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
     _authEnds = new AuthEndpoints();
     validRegister = true;
     loading = false;
-    registerForm: FormGroup;
+    registerForm: AbstractControl;
 
     constructor(
         private _auth: AuthenticationService,
@@ -123,7 +123,7 @@ export class RegisterComponent implements OnInit {
             this._rest.post(this._authEnds.register, registerInfo)
                 .subscribe(
                     result => {
-                        // this._auth.successfulLogin(result.token, '/orders');
+                        // this._auth.successfulLogin(result.token, '/accounts');
                         this.loading = false;
                         this._router.navigate(['/login']);
                     },

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +23,9 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AuthenticationModule } from './authentication/authentication.module';
+import { MatListModule } from '@angular/material/list';
 
 export function tokenGetter() {
   if (sessionStorage.getItem('jwt')) {
@@ -48,14 +51,17 @@ export function tokenGetter() {
               whitelistedDomains: [environment.frontendDomain, environment.serverDomain, environment.serverLink],
           }
       }),
+      FlexLayoutModule,
       ToastrModule.forRoot(),
       ModalModule.forRoot(),
+      FormsModule,
       ReactiveFormsModule,
       UiSwitchModule,
       MatSelectModule,
       MatPaginatorModule,
       MatSortModule,
       MatTableModule,
+      AuthenticationModule
 
   ],
   providers: [
@@ -73,6 +79,8 @@ export function tokenGetter() {
 exports: [
   MatButtonModule,
   MatButtonToggleModule,
-]
+  MatListModule
+],
+schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

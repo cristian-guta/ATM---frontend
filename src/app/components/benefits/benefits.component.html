@@ -1,22 +1,22 @@
-<div class="table-wrapper">
-    <table class="w-fit table table-bordered mt-3 mr-auto ml-auto">
-        <thead class="thead-dark">
-            <tr>
-                <th class="text-center">#</th>
-                
-                <th>Description</th>
-                
-                <!-- <th class="text-center">Actions</th> -->
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let benefit of benefits; let i = index;">
-                <td class="text-center align-middle">{{ i + 1 }}</td>
-                <td class="align-middle">{{ benefit.description }}</td>
-            </tr>
-            <tr *ngIf="benefits.length === 0">
-                <td colspan="6" class="text-center">There are no benefits.</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="mat-elevation-z8" *ngIf="benefits.data.length !==0">
+    <mat-table #table [dataSource] = "benefits" matSort>
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <th mat-cell *matCellDef="let benefit; let i=index">{{ i+1 }}</th>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>First name</th>
+            <th mat-cell *matCellDef="let benefit">{{ benefit.description }}</th>
+        </ng-container> 
+
+        <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+
+<div *ngIf="benefits.data.length === 0">
+    <p>There are no benefits</p>
 </div>

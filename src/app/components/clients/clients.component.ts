@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Client } from 'src/app/models/client';
 import { ClientService } from 'src/app/services/client.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-clients',
@@ -10,7 +13,13 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class ClientsComponent implements OnInit {
 
-  clients: Client[] = [];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  clients = new MatTableDataSource<Client>();
+  displayColumns: string[] = ['id', 'firstName', 'lastName', 'username', 'email', 'address', 'cnp', 'actions'];
+  
+  
     constructor(
         private clientService: ClientService,
         private _toast: ToastService
@@ -18,7 +27,18 @@ export class ClientsComponent implements OnInit {
 
     ngOnInit() {
         this.clientService.getClients()
-            .subscribe((result: Client[]) => this.clients = result);
+            .subscribe((result: Client[]) => this.clients.data = result);
+    }
+
+    ngAfterViewInit() {
+      this.clients.paginator = this.paginator;
+      this.clients.sort = this.sort;
+    }
+  
+    applyFilter(filterValue: string) {
+      filterValue = filterValue.trim(); // Remove whitespace
+      filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+      this.clients.filter = filterValue;
     }
 
     deactivate(client: Client) {

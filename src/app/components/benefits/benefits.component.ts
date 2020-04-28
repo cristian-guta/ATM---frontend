@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { BenefitService } from 'src/app/services/benefit.service';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Benefit } from 'src/app/models/benefit';
 import { Subscription } from 'src/app/models/subscription';
 import { SubscriptionService } from 'src/app/services/subscription.service';
-import { SubscriptionsComponent } from '../subscriptions/subscriptions.component';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { BankAccountModalComponent } from 'src/app/modals/bank-account-modal/bank-account-modal.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 
 @Component({
@@ -17,9 +16,13 @@ import { BankAccountModalComponent } from 'src/app/modals/bank-account-modal/ban
 })
 export class BenefitsComponent implements OnInit {
 
-  benefits: Benefit[] = [];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  benefits = new MatTableDataSource<Benefit>();;
   subscription: Subscription;
   
+  displayColumns: string[] = ['id', 'description'];
 
   constructor(
     private _auth: AuthenticationService,
@@ -28,16 +31,27 @@ export class BenefitsComponent implements OnInit {
     
   ) { }
 
+  ngAfterViewInit() {
+    this.benefits.paginator = this.paginator;
+    this.benefits.sort = this.sort;
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.benefits.filter = filterValue;
+  }
+
   ngOnInit() {   
     if(!this.isAdmin()){
       this.subscriptionService.getSubscription().subscribe((sub: Subscription) => {
-        this.benefits = sub.benefits;
+        this.benefits.data = sub.benefits;
       })
     }
     else{
       this.benefitService.getAllBenefits()
           .subscribe((result: Benefit[]) => {
-            this.benefits = result;
+            this.benefits.data = result;
           });
     }
   }
