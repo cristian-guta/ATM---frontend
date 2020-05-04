@@ -49,21 +49,26 @@ export class AccountWithdrawModalComponent implements OnInit {
       return control.touched && control.invalid;
   }
 
+  isGreater(field): boolean{
+    const control = this.withdrawForm.get(field);
+    return control.value>this.account.amount;
+  }
+
   save(): void{
     this.saving=true;
-    
-    this.accountService.withdrawMoney(this.account.id, this.amount.value)
-      .subscribe(() => {
-        this.saving = false;
-        this.onClose.next();
-        this.hideModal();
-        this._toast.showSuccess('Amount successfully withdrawed!');
-        window.location.reload();
-      },
-        () => {
+    if(this.amount.value<=this.account.amount){
+      this.accountService.withdrawMoney(this.account.id, this.amount.value)
+        .subscribe(() => {
           this.saving = false;
-          this._toast.showError('Failed to withdraw the amount!');
+          this.onClose.next();
+          this.hideModal();
+          this._toast.showSuccess('Amount successfully withdrawed!');
+          window.location.reload();
         });
+    }
+    else{
+      this._toast.showError('Amount is greater than how much you own!');
+    }
   }
 
   hideModal(): void {

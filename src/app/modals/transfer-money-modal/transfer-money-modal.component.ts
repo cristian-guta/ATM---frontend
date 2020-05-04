@@ -72,21 +72,27 @@ export class TransferMoneyModalComponent implements OnInit {
     }
     return valid;
   }
+
+  isGreater(field): boolean{
+    const control = this.transferForm.get(field);
+    return control.value>this.transferFrom.amount;
+  }
   
   save(): void{
     this.saving=true;
-    this.accountService.transferMoney(this.transferFrom.id, this.receiverId.value, this.amount.value)
-      .subscribe(() => {
-        this.saving = false;
-        this.onClose.next();
-        this.hideModal();
-        this._toast.showSuccess('Amount successfully transfered!');
-        window.location.reload();
-      },
-        () => {
+    if(this.amount.value<=this.transferFrom.amount){
+      this.accountService.transferMoney(this.transferFrom.id, this.receiverId.value, this.amount.value)
+        .subscribe(() => {
           this.saving = false;
-          this._toast.showError('Failed to transfer the amount!');
+          this.onClose.next();
+          this.hideModal();
+          this._toast.showSuccess('Amount successfully transfered!');
+          window.location.reload();
         });
+    }
+    else{
+      this._toast.showError('Amount is greater than how much you own!');
+    }
   }
 
   hideModal(): void {
