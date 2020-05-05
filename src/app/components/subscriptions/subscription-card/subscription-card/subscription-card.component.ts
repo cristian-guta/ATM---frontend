@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Pipe, PipeTransform } from '@angular/core';
 import { Subscription } from 'src/app/models/subscription';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -7,6 +7,9 @@ import { ToastService } from 'src/app/services/toast.service';
 import { SubscriptionModalComponent } from 'src/app/modals/subscription-modal/subscription-modal.component';
 import { SubscriptionsComponent } from '../../subscriptions.component';
 import { Router, NavigationEnd } from '@angular/router';
+import { Client } from 'src/app/models/client';
+import { ClientService } from 'src/app/services/client.service';
+
 
 @Component({
   selector: 'app-subscription-card',
@@ -20,17 +23,20 @@ export class SubscriptionCardComponent implements OnInit {
   modalRef: BsModalRef;
   deleteLoading = false;
   hasSubscription: boolean = false;
-  
+  activationDate: Date;
+  deactivated: boolean = false;
+  client: Client;
+
   constructor(
     private _auth: AuthenticationService,
     private subscriptionService: SubscriptionService,
     private _modal: BsModalService,
     private _toast: ToastService,
+    private _clientService: ClientService
   ) {}
 
   ngOnInit() {
     this.subscriptionService.getSubscription().subscribe((sub: Subscription) => {
-      
       if(sub){
         this.hasSubscription = true;
       }
@@ -58,7 +64,7 @@ export class SubscriptionCardComponent implements OnInit {
   }
 
   activate(){
-    
+        
     this.subscriptionService.activateSubscription(this.subscription).subscribe(() => {
       this._toast.showSuccess('Successfully activated subscription ' + this.subscription.name + '!');
       this.hasSubscription = true;
@@ -70,11 +76,13 @@ export class SubscriptionCardComponent implements OnInit {
     );
     window.location.reload();
   }
-  deactivate(){
+
+  deactivate(){ 
     
     this.subscriptionService.cancelSubscription().subscribe(() => {
       this._toast.showSuccess('Successfully deactivated subscription ' + this.subscription.name + '!');
       this.hasSubscription = false;
+      this.deactivated = true;
     },
       () => {
         this._toast.showSuccess('Failed to deactivate subscription ' + this.subscription.name + ', please contact support team.');

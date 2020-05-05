@@ -1,4 +1,4 @@
-<div class="mat-elevation-z8" *ngIf="operations.data.length>0">
+<div class="mat-elevation-z8" >
     <mat-table #table [dataSource] = "operations" matSort matSortActive="date" matSortDirection="desc">
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>

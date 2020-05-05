@@ -27,6 +27,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { MatListModule } from '@angular/material/list';
 
+
 export function tokenGetter() {
   if (sessionStorage.getItem('jwt')) {
       return sessionStorage.getItem('jwt');
@@ -39,6 +40,7 @@ export function tokenGetter() {
   declarations: [
     AppComponent,   
     AccountInformationComponent, SubscriptionModalComponent, BankAccountModalComponent, AccountDepositModalComponent, AccountWithdrawModalComponent, TransferMoneyModalComponent,
+    
   ],
   imports: [
       BrowserModule,
@@ -65,7 +67,9 @@ export function tokenGetter() {
 
   ],
   providers: [
+    
     {
+      
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true

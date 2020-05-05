@@ -16,4 +16,5 @@ export class Client {
     subscription?: Subscription;
     subscriptionId?: number;
     deleting?: boolean;
+    activationDate?: Date;
 }
