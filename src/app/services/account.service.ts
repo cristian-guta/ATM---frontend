@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AccountEndpoints } from '../endpoints/account-endpoints';
 import { RestService } from './rest.service';
 import { Account } from '../models/account';
-import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +15,7 @@ export class AccountService{
     currAcct: Account;
 
     getAccountByCNP(){
-        return this.rest.get(this.accountEnds.accountsByCNP);
+        return this.rest.get(this.accountEnds.accountByCNP);
     }
 
     getAccount(id: number){

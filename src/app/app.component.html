@@ -12,15 +12,19 @@
     </div>
 
     <div class="btn-group ml-auto">
-        <button *ngIf="currentUser" (click)="openAccountInfoModal()" class="btn btn-link">
-          <i class="fas fa-user"></i>
-          <span class="text-dark d-none d-lg-inline-block d-xl-inline-block ml-2">My Account</span>
+        <button *ngIf="currentUser" (click)="openAccountInfoModal()" class="btn btn-link">          
+          <!-- <button mat-button>Personal information</button> -->
+          <button mat-mini-fab color="white">
+            <mat-icon>i</mat-icon>
+          </button>
       </button>
 
       <div *ngIf="!currentUser" class="dropdown">
           <button type="button" class="h-100 btn btn-link" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
-              <i class="fas fa-user"></i>
+              <button mat-mini-fab color="white">
+                <mat-icon>Go to</mat-icon>
+              </button>
               <span class="text-dark d-none d-lg-inline-block d-xl-inline-block ml-2">My Account</span>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
@@ -39,12 +43,12 @@
               <a routerLinkActive="active" routerLink="/subscriptions" class="nav-item nav-link" *ngIf="isAdmin()">Subscriptions</a>
               <a routerLinkActive="active" routerLink="/subscriptions" class="nav-item nav-link" *ngIf="!isAdmin()">My subscription</a>
               <a routerLinkActive="active" routerLink="/benefits" class="nav-item nav-link">Benefits</a>
-              <a routerLinkActive="active" routerLink="/accounts" *ngIf="!isAdmin()" class="nav-item nav-link">My accounts</a>
+              <a routerLinkActive="active" routerLink="/accounts" *ngIf="!isAdmin()" class="nav-item nav-link">My account</a>
               <a routerLinkActive="active" routerLink="/accounts" *ngIf="isAdmin()" class="nav-item nav-link">Accounts</a>
               <a *ngIf="isAdmin()" routerLinkActive="active" routerLink="/clients" class="nav-item nav-link">Clients</a>
               <a routerLinkActive="active" routerLink="/operations" class="nav-item nav-link">Operations</a>
           </div>
-          <span *ngIf="currentUser" (click)="logout()" class="logout nav-item nav-link cursor-pointer">Logout</span>
+          <button mat-button (click)="logout()" *ngIf="currentUser" class="logout nav-item nav-link">Logout</button>
       </div>
   </div>
 </nav>

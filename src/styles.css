@@ -1,5 +1,6 @@
 @import '~ngx-toastr/toastr';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~material-design-icons/iconfont/material-icons.css';
 @use '@material/button/mdc-button';
 
 * {
@@ -16,7 +17,7 @@ body {
     height: 100%;
     padding: 0;
     margin: 0;
-    
+    font-family: "Times New Roman", Times, serif;
 }
 
 .w-fit {

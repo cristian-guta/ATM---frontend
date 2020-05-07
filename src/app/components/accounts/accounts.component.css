@@ -25,3 +25,12 @@ table{
   margin-right: 8px;
   border: none;
 }
+
+.mat-card{
+  padding: 32px;
+  margin-top: 2%;
+}
+
+.mat-stroked-button{
+  border: none; 
+}

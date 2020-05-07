@@ -7,20 +7,33 @@ import { SubscriptionsRoutingModule } from './subscriptions-routing.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SubscriptionModalComponent } from 'src/app/modals/subscription-modal/subscription-modal.component';
-import { SubscriptionCardComponent } from './subscription-card/subscription-card/subscription-card.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
     declarations: [
-        SubscriptionsComponent,
-        SubscriptionCardComponent,     
+        SubscriptionsComponent,    
     ],
     imports: [
         CommonModule,
         SubscriptionsRoutingModule,
         ReactiveFormsModule,
         FormsModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        MatTableModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatCardModule
     ],
-    entryComponents: [SubscriptionModalComponent]
+    entryComponents: [SubscriptionModalComponent],
+    exports: [
+        MatCardModule,
+        MatTableModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+      ],
 })
 export class SubscriptionsModule { }

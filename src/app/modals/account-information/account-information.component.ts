@@ -13,7 +13,7 @@ import { ClientService } from 'src/app/services/client.service';
 })
 export class AccountInformationComponent implements OnInit {
 
-    @Input() allowEdit = false;
+    // @Input() allowEdit = false;
     accountForm: FormGroup;
     currentUser: Client;
     isModal = false;
@@ -30,13 +30,13 @@ export class AccountInformationComponent implements OnInit {
 
     ngOnInit() {
         this.accountForm = this._fb.group({
-            firstName: [{ value: '', disabled: !this.allowEdit }, Validators.required],
-            lastName: [{ value: '', disabled: !this.allowEdit }, Validators.required],
+            firstName: [{ value: '' }, Validators.required],
+            lastName: [{ value: '' }, Validators.required],
             username: [{ value: '', disabled: true }, Validators.required],
             role: [{ value: '', disabled: true }, Validators.required],
-            email: [{ value: '', disabled: !this.allowEdit }, [Validators.required, Validators.email]],
-            address: [{ value: '', disabled: !this.allowEdit }, Validators.required],
-            cnp: [{ value: '', disabled: !this.allowEdit }, Validators.required],
+            email: [{ value: '' }, [Validators.required, Validators.email]],
+            address: [{ value: '' }, Validators.required],
+            cnp: [{ value: '' }, Validators.required],
         });
         this.getUserInfo();
     }
@@ -73,14 +73,14 @@ export class AccountInformationComponent implements OnInit {
         this.cnp.disable();
     }
 
-    onChange(value) {
-        this.allowEdit = value;
-        if (this.allowEdit) {
-            this.enableFields();
-        } else {
-            this.disableFields();
-        }
-    }
+    // onChange(value) {
+    //     this.allowEdit = value;
+    //     if (this.allowEdit) {
+    //         this.enableFields();
+    //     } else {
+    //         this.disableFields();
+    //     }
+    // }
 
     get firstName(): AbstractControl {
         return this.accountForm.get('firstName');
@@ -133,7 +133,7 @@ export class AccountInformationComponent implements OnInit {
         this._userService.updateClient(userInfo)
             .subscribe(() => {
                 this.saving = false;
-                this.onChange(false);
+                // this.onChange(false);
                 this._toast.showSuccess('Information successfully changed!');
                 if (this.isModal) {
                     this.hideModal();

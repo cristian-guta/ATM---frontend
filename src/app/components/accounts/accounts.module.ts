@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AccountsComponent } from './accounts.component';
 import { AccountsRoutingModule } from './accounts-routing.module';
@@ -11,6 +11,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -27,12 +28,15 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatPaginatorModule,
     MatButtonModule,
     MatButtonToggleModule,
+    MatCardModule
   ],
   entryComponents: [BankAccountModalComponent],
   exports: [
+    MatCardModule,
     MatTableModule,
     MatButtonModule,
     MatButtonToggleModule,
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AccountsModule { }

@@ -25,10 +25,9 @@ export class AccountsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   allAccounts = new MatTableDataSource<Account>();
-  
   displayColumnsAdmin: string[];
   
-
+  clientAccount: Account;
   loading = true;
   modalRef: BsModalRef;
   clients: Client[] = [];
@@ -65,8 +64,8 @@ export class AccountsComponent implements OnInit {
   getAccounts(){
     if(!this.isAdmin()){
       this._accountService.getAccountByCNP()
-                .subscribe((result: Account[]) => {
-                    this.allAccounts.data = result;
+                .subscribe((result: Account) => {
+                    this.clientAccount = result;
                     this.loading = false;
                 });
     }

@@ -1,7 +1,7 @@
 import { Account } from '../models/account';
 
 export class AccountEndpoints{
-    accountsByCNP = 'accounts';
+    accountByCNP = 'accounts';
     create = 'accounts/create';
     delete = 'accounts/delete';
     account = 'accounts';

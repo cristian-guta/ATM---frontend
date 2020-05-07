@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'src/app/models/subscription';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SubscriptionModalComponent } from 'src/app/modals/subscription-modal/subscription-modal.component';
+import { Client } from 'src/app/models/client';
+import { ToastService } from 'src/app/services/toast.service';
 
 
 @Component({
@@ -16,41 +18,55 @@ import { SubscriptionModalComponent } from 'src/app/modals/subscription-modal/su
 export class SubscriptionsComponent implements OnInit {
 
   // subscription = new Subscription();
-  public subscription: Subscription;
-  public subscriptions: Subscription[] = [];
+  @Output() deleteAction = new EventEmitter();
+  subscription: Subscription;
+  subscriptions: Subscription[] = [];
   modalRef: BsModalRef;
-  public isActivated: boolean;
+  isActivated: boolean;
+  client: Client;
+  hasSubscription: boolean = false;
+  deactivated: boolean = false;
+  deleteLoading = false;
 
   constructor(
     private _auth: AuthenticationService,
     private subsService: SubscriptionService,
-    private _router: Router,
-    private _modal: BsModalService
+    private _modal: BsModalService,
+    private _toast: ToastService,
   ) {}
 
   ngOnInit(){
     this.isActivated=false;
+    this.subsService.getSubscription().subscribe((sub: Subscription) => {
+      if(sub){
+        this.hasSubscription = true;
+        this.subscription = sub;
+      }
+      else{
+        this.hasSubscription = false;
+      }
+    })
     this.getSubscriptions();
   }
 
   getSubscriptions(){
 
+
     this.subsService.getAllSubscriptions().subscribe((subs: Subscription[]) => {
-      subs.forEach(s => {
-        if(s.deleted !== true){
-          this.subscriptions.push(s);
-        }
-      });
-      // this.subscriptions = subs;
+      // subs.forEach(s => {
+      //   if(s.deleted !== true){
+      //     this.subscriptions.push(s);
+      //
+      // });
+      this.subscriptions = subs;     
+    });
       
-    });
-        
-    this.subsService.getSubscription().subscribe((sub: Subscription) => {
-      this.subscription=sub;
-      if(sub){
-        this.isActivated=true;
-      }
-    });
+    // this.subsService.getSubscription().subscribe((sub: Subscription) => {
+    //   this.subscription=sub;
+    //   if(sub){
+    //     this.isActivated=true;
+    //   }
+    // });
   }
 
   openModal() {
@@ -74,6 +90,60 @@ export class SubscriptionsComponent implements OnInit {
 
   removeSubscription(subscription){
     this.subscriptions = this.subscriptions.filter((sub: Subscription) => sub.id!== subscription.id);
+  }
+
+  activate(subscription: Subscription){
+        
+    this.subsService.activateSubscription(subscription).subscribe(() => {
+      this._toast.showSuccess('Successfully activated subscription ' + subscription.name + '!');
+      this.hasSubscription = true;
+    },
+      () => {
+        this._toast.showSuccess('Failed to activate subscription ' + subscription.name + ', please contact support team.');
+        this.hasSubscription = false;
+      }
+    );
+    window.location.reload();
+  }
+
+  deactivate(){ 
+    
+    this.subsService.cancelSubscription().subscribe(() => {
+      this._toast.showSuccess('Successfully deactivated subscription ' + this.subscription.name + '!');
+      this.hasSubscription = false;
+      this.deactivated = true;
+    },
+      () => {
+        this._toast.showSuccess('Failed to deactivate subscription ' + this.subscription.name + ', please contact support team.');
+        this.hasSubscription = true;
+      }
+    );
+    window.location.reload();
+  }
+
+  delete(subscription: Subscription) {
+    this.deleteLoading = true;
+    this.subsService.deleteSubscription(subscription)
+        .subscribe(() => {
+            this.subscription.deleted=true;
+            this._toast.showSuccess('Subscription successfully deleted.');
+            this.deleteAction.emit(subscription);
+            this.deleteLoading = false;
+        },
+            () => {
+                this._toast.showError('Failed to delete subscription.');
+                this.deleteLoading = false;
+            });
+    window.location.reload();
+  }
+
+  openSubscriptionModal(sub: Subscription) {
+    this.modalRef = this._modal.show(SubscriptionModalComponent, { initialState: { subscription: sub } });
+    this.modalRef.content.onClose.subscribe((subscription: Subscription) => {
+        sub.name = subscription.name;
+        sub.price = subscription.price;
+        sub.benefits = subscription.benefits;
+    });
   }
 
 }

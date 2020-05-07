@@ -1,5 +1,5 @@
-<div class="mat-elevation-z8" >
-    <mat-table #table [dataSource] = "operations" matSort matSortActive="date" matSortDirection="desc">
+<div class="mat-elevation-z8" *ngIf="operations.data.length>0">
+    <mat-table #table [dataSource] = "operations" matSort matSortActive="date" matSortDirection="desc" >
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
             <th mat-cell *matCellDef="let operation; let i=index">{{ i+1 }}</th>
@@ -36,7 +36,8 @@
     </mat-table>
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
-
 <div *ngIf="operations.data.length===0">
-    You have no operations!
+    <mat-card>
+        You have no operations!
+    </mat-card>
 </div>

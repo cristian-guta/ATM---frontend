@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import { MatSortModule } from '@angular/material/sort';
         MatPaginatorModule,
         MatButtonModule,
         MatButtonToggleModule,
+        MatCardModule
     ],
     exports: [
         MatTableModule,

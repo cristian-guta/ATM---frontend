@@ -26,7 +26,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { MatListModule } from '@angular/material/list';
-
+import { MatCardModule } from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
 
 export function tokenGetter() {
   if (sessionStorage.getItem('jwt')) {
@@ -60,11 +61,11 @@ export function tokenGetter() {
       ReactiveFormsModule,
       UiSwitchModule,
       MatSelectModule,
+      MatCardModule,
       MatPaginatorModule,
       MatSortModule,
       MatTableModule,
       AuthenticationModule
-
   ],
   providers: [
     
@@ -83,7 +84,9 @@ export function tokenGetter() {
 exports: [
   MatButtonModule,
   MatButtonToggleModule,
-  MatListModule
+  MatListModule,
+  MatCardModule,
+  MatIconModule,
 ],
 schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
