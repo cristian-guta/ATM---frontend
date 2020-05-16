@@ -41,14 +41,14 @@ export class ClientsComponent implements OnInit {
       this.clients.filter = filterValue;
     }
 
-    deactivate(client: Client) {
-      client.deleting = true;
-      this.clientService.deactivateClient(client)
-          .subscribe(() => {
-              client.deleting = false;
-              client.deactivate = true;
-              this._toast.showSuccess('Client successfully blocked!');
-          });
+  deactivate(client: Client) {
+    client.deleting = true;
+    this.clientService.deactivateClient(client)
+        .subscribe(() => {
+            client.deleting = false;
+            client.deactivate = true;
+            this._toast.showSuccess('Client successfully blocked!');
+        });
   }
 
   activate(client: Client) {

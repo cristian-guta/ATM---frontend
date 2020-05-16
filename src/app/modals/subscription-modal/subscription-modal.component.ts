@@ -46,7 +46,7 @@ export class SubscriptionModalComponent implements OnInit {
   }
 
   getBenefits(){
-    this.benefitService.getAllBenefits()
+    this.benefitService.getAllUnpagedBenefits()
       .subscribe((benefits: Benefit[]) => {
         benefits.forEach(element => {
           this.benefitsList.push(element);  

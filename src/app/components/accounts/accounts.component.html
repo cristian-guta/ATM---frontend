@@ -26,7 +26,7 @@
         <mat-table #table [dataSource] = "allAccounts" matSort>
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-                <th mat-cell *matCellDef="let account; let i=index">{{ i+1 }}</th>
+                <th mat-cell *matCellDef="let account;">{{ account.id }}</th>
             </ng-container>
 
             <ng-container matColumnDef="name">
@@ -63,7 +63,12 @@
             <tr mat-row *matRowDef="let row; columns: displayColumnsAdmin;"></tr>
 
         </mat-table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <mat-paginator 
+                        [length]="length"
+                        [pageSize]="pageSize"
+                        [pageIndex]="pageIndex"
+                        (page)="handleRequest($event)"
+                        [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons="true"></mat-paginator>
     </div>
 
     

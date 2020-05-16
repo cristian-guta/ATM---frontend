@@ -12,12 +12,10 @@
                     <p style="font-weight:bold">{{ sub.price }} RON</p>
                 </mat-card-content>
     
-                <mat-card-actions>
-                    <div>
-                        <button mat-stroked-button *ngIf="!hasSubscription" (click)="activate(sub)" [disabled]="deleteLoading">Activate subscription</button>
-                        <button mat-stroked-button *ngIf="hasSubscription" (click)="deactivate()" [disabled]="deleteLoading">Deactivate subscription</button>
-                    </div>
-                </mat-card-actions>
+                <mat-card-footer>
+                    <button mat-stroked-button *ngIf="!hasSubscription" (click)="activate(sub)" [disabled]="deleteLoading">Activate subscription</button>
+                    <button mat-stroked-button *ngIf="hasSubscription" (click)="deactivate()" [disabled]="deleteLoading">Deactivate subscription</button>
+                </mat-card-footer>
             </mat-card>
     
         </div>
@@ -34,12 +32,10 @@
                 <p style="font-weight:bold">{{ subscription.price }} RON</p>
             </mat-card-content>
 
-            <mat-card-actions>
-                <div>
-                    <button mat-stroked-button *ngIf="!hasSubscription" (click)="activate(subscription)" [disabled]="deleteLoading">Activate subscription</button>
-                    <button mat-stroked-button *ngIf="hasSubscription" (click)="deactivate()" [disabled]="deleteLoading">Deactivate subscription</button>
-                </div>
-            </mat-card-actions>
+            <mat-card-footer>
+                <button mat-stroked-button *ngIf="!hasSubscription" (click)="activate(subscription)" [disabled]="deleteLoading">Activate subscription</button>
+                <button mat-stroked-button *ngIf="hasSubscription" (click)="deactivate()" [disabled]="deleteLoading">Deactivate subscription</button>
+            </mat-card-footer>
         </mat-card>
     </div>
 

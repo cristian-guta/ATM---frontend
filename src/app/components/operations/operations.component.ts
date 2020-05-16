@@ -16,8 +16,12 @@ export class OperationsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  public operations = new MatTableDataSource<Operation>();
+  public operations: MatTableDataSource<Operation>;
   displayColumns: string[] = ['id', 'type', 'amount', 'date', 'client', 'account'];
+
+  length: number;
+  pageSize: number=5;
+  pageIndex:number = 0;
 
   constructor(
     private _auth: AuthenticationService,
@@ -25,19 +29,24 @@ export class OperationsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getAllOperations()
+    this.getAllOperations(this.pageSize, this.pageIndex)
   }
 
-  getAllOperations(){
-    this.operationsService.getAllOperations().subscribe((ops: Operation[]) => {
-      this.operations.data=ops;
+  getAllOperations(size, index){
+    this.operationsService.getAllOperations(index, size)
+    .subscribe(result => {
+      this.operations=result.content;
+      this.operations.paginator = this.paginator;
+      this.length = result.totalElements;
     });
   }
 
-  ngAfterViewInit() {
-    this.operations.paginator = this.paginator;
-    this.operations.sort = this.sort;
+  handleRequest(event: any){
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.getAllOperations(this.pageSize, this.pageIndex);
   }
+
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace

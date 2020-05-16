@@ -11,6 +11,10 @@ export class AccountEndpoints{
     withdraw = 'accounts/withdraw';
     transfer = 'accounts/transfer';
 
+    getAllAccounts(page, size){
+        return this.allAccounts + '/' + page + '/' + size;
+    }
+
     getDelete(id: number): string{
         return this.delete + '/' + id;
     }

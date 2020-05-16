@@ -12,7 +12,7 @@ export class OperationsService{
         private rest: RestService
     ){}
 
-    getAllOperations(){
-        return this.rest.get(this.operationsEnds.allOperations);
+    getAllOperations(page, size){
+        return this.rest.get(this.operationsEnds.getAllOperations(page, size));
     }
 }

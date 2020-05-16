@@ -22,8 +22,8 @@ export class AccountService{
         return this.rest.get(this.accountEnds.getAccount(id));
     }
 
-    getAllAccounts(){
-        return this.rest.get(this.accountEnds.allAccounts);
+    getAllAccounts(page, size){
+        return this.rest.get(this.accountEnds.getAllAccounts(page, size));
     }
 
     createAccount(account: Account){

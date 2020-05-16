@@ -24,13 +24,17 @@ export class AccountsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  allAccounts = new MatTableDataSource<Account>();
+  allAccounts: MatTableDataSource<Account>;
   displayColumnsAdmin: string[];
   
   clientAccount: Account;
   loading = true;
   modalRef: BsModalRef;
   clients: Client[] = [];
+
+  length: number;
+  pageSize: number=5;
+  pageIndex:number = 0;
 
   constructor(
     private _auth: AuthenticationService,
@@ -40,28 +44,13 @@ export class AccountsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.allAccounts.paginator = this.paginator
     if(this.isAdmin()){
       this.displayColumnsAdmin = ['id', 'name', 'amount', 'details', 'owner'];
     }
     else{
       this.displayColumnsAdmin = ['id', 'name', 'amount', 'details', 'operations'];
     }
-    this.getAccounts();    
-  }
-
-  ngAfterViewInit() {
-    this.allAccounts.paginator = this.paginator;
-    this.allAccounts.sort = this.sort;
-  }
-
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.allAccounts.filter = filterValue;
-  }
-
-  getAccounts(){
+    
     if(!this.isAdmin()){
       this._accountService.getAccountByCNP()
                 .subscribe((result: Account) => {
@@ -70,13 +59,32 @@ export class AccountsComponent implements OnInit {
                 });
     }
     else{
-      this._accountService.getAllAccounts().subscribe((accounts: Account[]) => {
-        this.allAccounts.data = accounts;
-        accounts.forEach(element => {
-          this.clients.push(element.client);
-        });
-      });
+      this.getData(this.pageSize, this.pageIndex);
     }
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.allAccounts.filter = filterValue;
+  }s
+
+  getData(size, index){
+    this._accountService.getAllAccounts(index, size)
+    .subscribe(result => {
+      this.allAccounts = result.content;
+      this.allAccounts.paginator = this.paginator;
+      this.length = result.totalElements;
+      result.content.forEach(element => {
+        this.clients.push(element.client);
+      });
+      });
+  }
+
+  handleRequest(event: any){
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.getData(this.pageSize, this.pageIndex);
   }
 
   isAdmin() {

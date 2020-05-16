@@ -5,7 +5,7 @@ import { Benefit } from 'src/app/models/benefit';
 import { Subscription } from 'src/app/models/subscription';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
 
@@ -19,9 +19,12 @@ export class BenefitsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  benefits = new MatTableDataSource<Benefit>();;
+  benefits: MatTableDataSource<Benefit>;
   subscription: Subscription;
-  
+  length: number;
+  pageSize: number=5;
+  pageIndex:number = 0;
+
   displayColumns: string[] = ['id', 'description'];
 
   constructor(
@@ -31,35 +34,41 @@ export class BenefitsComponent implements OnInit {
     
   ) { }
 
-  ngAfterViewInit() {
-    this.benefits.paginator = this.paginator;
-    this.benefits.sort = this.sort;
-  }
-
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.benefits.filter = filterValue;
   }
 
-  ngOnInit() {   
+  ngOnInit() { 
     if(!this.isAdmin()){
       this.subscriptionService.getSubscription().subscribe((sub: Subscription) => {
-        this.benefits.data = sub.benefits;
+        this.benefits = new MatTableDataSource<Benefit>(sub.benefits);
+        // this.benefits.data = sub.benefits;
       })
     }
     else{
-      this.benefitService.getAllBenefits()
-          .subscribe((result: Benefit[]) => {
-            this.benefits.data = result;
-          });
+        this.getData(this.pageSize, this.pageIndex);
     }
+  }
+
+  getData(size, index){
+    this.benefitService.getAllBenefits(index, size)
+    .subscribe(result => {
+      this.benefits = result.content;
+      this.benefits.paginator = this.paginator;
+      this.length = result.totalElements;
+    });
+  }
+
+  handleRequest(event: any){
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.getData(this.pageSize, this.pageIndex);
   }
 
   isAdmin() {
     return this._auth.getRole().includes('ADMIN');
-  }
-
-  
+  } 
 
 }
