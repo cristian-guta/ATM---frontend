@@ -13,8 +13,8 @@ export class ClientService {
         private rest: RestService
     ){}
 
-    getClients(){
-        return this.rest.get(this.clientEnds.allClients);
+    getClients(page: number, size: number){
+        return this.rest.get(this.clientEnds.getAllClients(page, size));
     }
 
     getCurrentClient(){

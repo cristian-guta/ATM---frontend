@@ -7,6 +7,9 @@ export class ClientEndpoints{
     deactivateClient = 'clients/delete';
     activateClient = 'clients/activate';
 
+    getAllClients(page, size){
+        return this.allClients + '/' + page + '/' + size;
+    }
     
     getUpdateClient(client: Client){
         return this.updateClient + '/' + client.id;

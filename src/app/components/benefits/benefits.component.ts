@@ -44,6 +44,7 @@ export class BenefitsComponent implements OnInit {
     if(!this.isAdmin()){
       this.subscriptionService.getSubscription().subscribe((sub: Subscription) => {
         this.benefits = new MatTableDataSource<Benefit>(sub.benefits);
+        this.benefits.paginator = this.paginator;
         // this.benefits.data = sub.benefits;
       })
     }

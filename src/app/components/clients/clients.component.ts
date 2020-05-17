@@ -19,6 +19,9 @@ export class ClientsComponent implements OnInit {
   clients = new MatTableDataSource<Client>();
   displayColumns: string[] = ['id', 'firstName', 'lastName', 'username', 'email', 'address', 'cnp', 'actions'];
   
+  length: number;
+  pageSize: number=5;
+  pageIndex:number = 0;
   
     constructor(
         private clientService: ClientService,
@@ -26,14 +29,24 @@ export class ClientsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.clientService.getClients()
-            .subscribe((result: Client[]) => this.clients.data = result);
+      this.getData(this.pageSize, this.pageIndex);
     }
 
-    ngAfterViewInit() {
-      this.clients.paginator = this.paginator;
-      this.clients.sort = this.sort;
+    getData(size, index){
+      this.clientService.getClients(index, size)
+            .subscribe(result => {
+              this.clients = result.content;
+              this.clients.paginator = this.paginator;
+              this.length = result.totalElements;
+            });
     }
+
+    handleRequest(event: any){
+      this.pageIndex = event.pageIndex;
+      this.pageSize = event.pageSize;
+      this.getData(this.pageSize, this.pageIndex);
+    }
+
   
     applyFilter(filterValue: string) {
       filterValue = filterValue.trim(); // Remove whitespace
