@@ -114,7 +114,7 @@ export class RegisterComponent implements OnInit {
             const registerInfo: Client = {
                 firstName: this.firstName.value,
                 lastName: this.lastName.value,
-                cnp: this.confirmPassword.value,
+                cnp: this.cnp.value,
                 username: this.username.value,
                 email: this.email.value,
                 password: this.password.value,
