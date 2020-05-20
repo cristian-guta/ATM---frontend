@@ -97,13 +97,14 @@ export class SubscriptionsComponent implements OnInit {
     this.subsService.activateSubscription(subscription).subscribe(() => {
       this._toast.showSuccess('Successfully activated subscription ' + subscription.name + '!');
       this.hasSubscription = true;
+      window.location.reload();
     },
       () => {
-        this._toast.showSuccess('Failed to activate subscription ' + subscription.name + ', please contact support team.');
+        this._toast.showError('Failed to activate subscription ' + subscription.name + ', no sufficient funds. If you do have the neccessary funds, please contact support team!');
         this.hasSubscription = false;
       }
     );
-    window.location.reload();
+    
   }
 
   deactivate(){ 
