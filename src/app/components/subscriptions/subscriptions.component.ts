@@ -17,7 +17,6 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class SubscriptionsComponent implements OnInit {
 
-  // subscription = new Subscription();
   @Output() deleteAction = new EventEmitter();
   subscription: Subscription;
   subscriptions: Subscription[] = [];
@@ -39,7 +38,8 @@ export class SubscriptionsComponent implements OnInit {
     this.isActivated=false;
     if(!this.isAdmin()){
       this.subsService.getSubscription().subscribe((sub: Subscription) => {
-        if(sub){
+        if(sub.name!=null){
+          
           this.hasSubscription = true;
           this.subscription = sub;
         }
