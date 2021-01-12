@@ -1,15 +1,15 @@
 import { Account } from '../models/account';
 
 export class AccountEndpoints{
-    accountByCNP = 'accounts';
-    create = 'accounts/create';
-    delete = 'accounts/delete';
-    account = 'accounts';
-    allAccounts = 'accounts/getAllAccounts';
-    update = 'accounts/update';
-    deposit = 'accounts/deposit';
-    withdraw = 'accounts/withdraw';
-    transfer = 'accounts/transfer';
+    accountByCNP = 'api/accounts';
+    create = 'api/accounts/create';
+    delete = 'api/accounts/delete';
+    account = 'api/accounts';
+    allAccounts = 'api/accounts/getAllAccounts';
+    update = 'api/accounts/update';
+    deposit = 'api/accounts/deposit';
+    withdraw = 'api/accounts/withdraw';
+    transfer = 'api/accounts/transfer';
 
     getAllAccounts(page, size){
         return this.allAccounts + '/' + page + '/' + size;

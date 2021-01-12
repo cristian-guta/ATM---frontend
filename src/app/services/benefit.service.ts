@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BenefitEndpoints } from '../endpoints/benefit-endpoints';
+import { Subscription } from '../models/subscription';
 import { RestService } from './rest.service';
 
 @Injectable({
@@ -17,5 +18,9 @@ export class BenefitService{
 
     getAllUnpagedBenefits(){
         return this.rest.get(this.benefitEnds.unpagedBenefits);
+    }
+
+    getBenefitsBySubscription(page: number, size: number){
+        return this.rest.get(this.benefitEnds.getAllBenefitsBySubscription(page, size));
     }
 }

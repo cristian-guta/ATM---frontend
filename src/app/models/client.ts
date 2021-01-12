@@ -1,3 +1,4 @@
+import { AuthProvider } from './authProvider';
 import { Subscription } from './subscription';
 
 
@@ -11,8 +12,10 @@ export class Client {
     email?: string;
     cnp?: string;
     address?: string;
-    deactivate?: boolean;
+    // deactivate?: boolean;
+    status?: boolean;
     role?: string;
+    authProvider?: AuthProvider
     subscription?: Subscription;
     subscriptionId?: number;
     deleting?: boolean;

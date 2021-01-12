@@ -28,6 +28,16 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { SocialAuthService } from 'angularx-social-login/socialauth.service';
+import { GoogleLoginProvider, SocialLoginModule } from 'angularx-social-login';
+import { RegisterComponent } from './authentication/register/register.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
+import { UpdateUserDataComponent } from './components/update-user-data/update-user-data.component';
+import { BenefitAuditComponent } from './components/benefit-audit/benefit-audit.component';
+import { SubscriptionAuditComponent } from './components/subscription-audit/subscription-audit.component';
+
+
 
 export function tokenGetter() {
   if (sessionStorage.getItem('jwt')) {
@@ -39,8 +49,8 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [
-    AppComponent,   
-    AccountInformationComponent, SubscriptionModalComponent, BankAccountModalComponent, AccountDepositModalComponent, AccountWithdrawModalComponent, TransferMoneyModalComponent,
+    AppComponent,
+    AccountInformationComponent, SubscriptionModalComponent, BankAccountModalComponent, AccountDepositModalComponent, AccountWithdrawModalComponent, TransferMoneyModalComponent, UpdateUserDataComponent, BenefitAuditComponent, SubscriptionAuditComponent,
     
   ],
   imports: [
@@ -65,10 +75,25 @@ export function tokenGetter() {
       MatPaginatorModule,
       MatSortModule,
       MatTableModule,
-      AuthenticationModule
+      AuthenticationModule,
+      OAuthModule.forRoot(),
+      SocialLoginModule,
   ],
   providers: [
-    
+    {
+    provide: 'SocialAuthServiceConfig',
+    useValue: {
+      autoLogin: true,
+      providers: [
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider(
+            '1035830881982-cbb7aagoc449t8s0u6h5gimknkf2fh7d.apps.googleusercontent.com'
+          ),
+        }
+      ]
+    }
+  },
     {
       
       provide: HTTP_INTERCEPTORS,

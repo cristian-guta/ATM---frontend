@@ -1,7 +1,7 @@
 export class BenefitEndpoints{
-    allBenefits = 'benefits';
-    unpagedBenefits = 'benefits/unpagedBenefits';
-    // bySubscription = 'benefits/bySubscription';
+    allBenefits = 'api/benefits';
+    unpagedBenefits = 'api/benefits/unpagedBenefits';
+    bySubscriptionPaged = 'api/benefits/user';
 
     // getBenefitsBySubscription(id : number): string{
     //     return this.bySubscription + '/' + id;
@@ -9,6 +9,11 @@ export class BenefitEndpoints{
 
     getAllBenefits(page: number, size: number){
         return this.allBenefits + '/' + page + '/' + size;
+    }
+
+    
+    getAllBenefitsBySubscription(page: number, size: number){
+        return this.bySubscriptionPaged + '/' + page + '/' + size;
     }
 
 }

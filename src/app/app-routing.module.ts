@@ -37,7 +37,7 @@ const routes: Routes = [
     data: {
         roles: ['ANONYMOUS', 'USER', 'ADMIN']
     },
-    runGuardsAndResolvers: 'always'
+    // runGuardsAndResolvers: 'always'
   },
   {
     path: 'operations',
@@ -72,6 +72,30 @@ const routes: Routes = [
         roles: ['ADMIN']
     }
   },
+  {
+    path: 'updateUserData',
+    loadChildren: () => import('./components/update-user-data/updateUserData.module').then(m => m.UpdateUserDataModule  ),
+    canActivate: [AuthGuard],
+    data: {
+        roles: ['ANONYMOUS', 'USER']
+    }
+  },
+  {
+    path: 'benefitsAudit',
+    loadChildren: () => import('./components/benefit-audit/benefit-audit-routing.module').then(m => m.BenefitAuditRoutingModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['ADMIN']
+    }
+  },
+  {
+    path: 'subscriptionsAudit',
+    loadChildren: () => import('./components/subscription-audit/subscription-audit-routing.module').then(m => m.SubscriptionAuditRoutingModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['ADMIN']
+    }
+  }
 ];
 
 @NgModule({

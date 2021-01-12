@@ -27,6 +27,7 @@
         <mat-card-actions class="example-button-row">
           <button mat-stroked-button >Log in</button>
           <button mat-stroked-button routerLink="/register">Register</button>
+          <button (click)="signInWithGoogle()">Sign in with Google</button>
         </mat-card-actions>
         
       </form>
@@ -39,6 +40,7 @@
     <p>After each operation, user receives a receipt via email containg details about his action.</p>
     <p>Added subscriptions similar to phone monthly plan.</p>
     <p>Admin can see all user's operations, clients and accounts.</p>
+    <p>Added auditing features for some tables</p>
 
   </div>
 
@@ -56,5 +58,6 @@
     <p>Angular 9</p>
     <p>Spring Framework</p>
     <p>Login via JWT</p>
+    <p>OAuth2 for Google Login</p>
   </div>
 </div>

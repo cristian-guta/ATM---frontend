@@ -37,36 +37,27 @@ export class SubscriptionsComponent implements OnInit {
 
   ngOnInit(){
     this.isActivated=false;
-    this.subsService.getSubscription().subscribe((sub: Subscription) => {
-      if(sub){
-        this.hasSubscription = true;
-        this.subscription = sub;
-      }
-      else{
-        this.hasSubscription = false;
-      }
-    })
-    this.getSubscriptions();
+    if(!this.isAdmin()){
+      this.subsService.getSubscription().subscribe((sub: Subscription) => {
+        if(sub){
+          this.hasSubscription = true;
+          this.subscription = sub;
+        }
+        else{
+          this.hasSubscription = false;
+          this.getSubscriptions();
+        }
+      });
+    }
+    else{
+      this.getSubscriptions();
+    }
   }
 
   getSubscriptions(){
-
-
     this.subsService.getAllSubscriptions().subscribe((subs: Subscription[]) => {
-      // subs.forEach(s => {
-      //   if(s.deleted !== true){
-      //     this.subscriptions.push(s);
-      //
-      // });
       this.subscriptions = subs;     
     });
-      
-    // this.subsService.getSubscription().subscribe((sub: Subscription) => {
-    //   this.subscription=sub;
-    //   if(sub){
-    //     this.isActivated=true;
-    //   }
-    // });
   }
 
   openModal() {

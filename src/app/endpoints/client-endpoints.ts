@@ -1,11 +1,11 @@
 import { Client } from '../models/client';
 
 export class ClientEndpoints{
-    allClients = 'clients';
-    currentClient = 'clients/current';
-    updateClient = 'clients/update';
-    deactivateClient = 'clients/delete';
-    activateClient = 'clients/activate';
+    allClients = 'api/clients';
+    currentClient = 'api/clients/current';
+    updateClient = 'api/clients/update';
+    deactivateClient = 'api/clients/delete';
+    activateClient = 'api/clients/activate';
 
     getAllClients(page, size){
         return this.allClients + '/' + page + '/' + size;

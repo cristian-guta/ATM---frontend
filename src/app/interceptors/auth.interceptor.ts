@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import {
     HttpRequest,
     HttpHandler,
@@ -10,17 +10,24 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
+import { OAuthEvent } from 'angular-oauth2-oidc';
+import { TokenService } from '../services/token.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
     constructor(
         private _router: Router,
-        private _auth: AuthenticationService
+        private _auth: AuthenticationService,
+        private tokenService: TokenService
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const token = this._auth.getToken();
+
+        var token = this._auth.getToken();
+        if(!token){
+            token = this.tokenService.getToken();
+        }
         request = request.clone({
             setHeaders: {
                 'Content-Type': 'application/json',
@@ -38,4 +45,5 @@ export class AuthInterceptor implements HttpInterceptor {
                 }
             }));
     }
+
 }

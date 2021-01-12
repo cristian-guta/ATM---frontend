@@ -59,7 +59,7 @@ export class ClientsComponent implements OnInit {
     this.clientService.deactivateClient(client)
         .subscribe(() => {
             client.deleting = false;
-            client.deactivate = true;
+            client.status = true;
             this._toast.showSuccess('Client successfully blocked!');
         });
   }
@@ -69,7 +69,7 @@ export class ClientsComponent implements OnInit {
       this.clientService.activateClient(client)
           .subscribe(() => {
               client.deleting = false;
-              client.deactivate = false;
+              client.status = false;
               this._toast.showSuccess('User successfully unblocked!');
           });
   }

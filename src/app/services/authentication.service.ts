@@ -35,16 +35,31 @@ export class AuthenticationService {
     }
 
     getToken(): any {
-        let token = sessionStorage.getItem('jwt');
-        if (token === null) {
+        let token;
+        if(!sessionStorage.getItem('jwt')){
             token = localStorage.getItem('jwt');
         }
+        else{
+            token = sessionStorage.getItem('jwt');
+        }
+
+        if(!token){
+            if(!sessionStorage.getItem('AuthToken')){
+                token = localStorage.getItem('AuthToken');
+            }
+            else{
+                token = sessionStorage.getItem('AuthToken');
+            }
+        }
+        
         return token;
     }
 
     removeToken(): void {
-        sessionStorage.removeItem('jwt');
-        localStorage.removeItem('jwt');
+        // sessionStorage.removeItem('jwt');
+        sessionStorage.clear();
+        // localStorage.removeItem('jwt');
+        localStorage.clear();
     }
 
     decodeToken(): any {
@@ -111,6 +126,6 @@ export class AuthenticationService {
     logout(): void {
         this.removeToken();
         this.currentUserSubject.next(null);
-        this._router.navigate(['/home']);
+        this._router.navigate(['/login']);
     }
 }

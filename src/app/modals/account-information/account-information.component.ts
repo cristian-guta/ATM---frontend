@@ -32,7 +32,7 @@ export class AccountInformationComponent implements OnInit {
         this.accountForm = this._fb.group({
             firstName: [{ value: '' }, Validators.required],
             lastName: [{ value: '' }, Validators.required],
-            username: [{ value: '', disabled: true }, Validators.required],
+            username: [{ value: ''}, Validators.required],
             role: [{ value: '', disabled: true }, Validators.required],
             email: [{ value: '' }, [Validators.required, Validators.email]],
             address: [{ value: '' }, Validators.required],
@@ -60,6 +60,7 @@ export class AccountInformationComponent implements OnInit {
     enableFields() {
         this.firstName.enable();
         this.lastName.enable();
+        this.username.enable();
         this.email.enable();
         this.address.enable();
         this.cnp.enable();
@@ -126,6 +127,7 @@ export class AccountInformationComponent implements OnInit {
             id: this.currentUser.id,
             firstName: this.firstName.value,
             lastName: this.lastName.value,
+            username: this.username.value,
             cnp: this.cnp.value,
             email: this.email.value,
             address: this.address.value

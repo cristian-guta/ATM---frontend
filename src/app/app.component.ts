@@ -1,12 +1,14 @@
 import { AccountInformationComponent } from './modals/account-information/account-information.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ToastService } from './services/toast.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './services/authentication.service';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
-import { environment } from 'src/environments/environment';
+import { ClientService } from './services/client.service';
+import { SocialAuthService } from 'angularx-social-login';
+import { TokenService } from './services/token.service';
 
 
 @Component({
@@ -14,10 +16,11 @@ import { environment } from 'src/environments/environment';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent{
     title = 'ATM - Project';
     currentUser: any;
     loginOrRegister = false;
+    loggedIn: boolean;
 
 
     constructor(
@@ -26,9 +29,21 @@ export class AppComponent {
         private _router: Router,
         private _route: ActivatedRoute,
         private _title: Title,
-        private _modal: BsModalService
+        private _modal: BsModalService,
+        private clientService: ClientService,
+        private authService: SocialAuthService,
+        private tokenService: TokenService
     ) {
-        this._auth.currentUser.subscribe(user => this.currentUser = user);
+        this._auth.currentUser.subscribe(user => {
+            this.currentUser = user;
+            // console.log(user);
+        });
+
+        // this.clientService.getCurrentClient().subscribe(user => {
+        //     this.currentUser = user;
+        //     console.log("user: ")
+        //     console.log(user);
+        // })
 
         this._router.events.pipe(
             filter(event => event instanceof NavigationEnd),
@@ -50,18 +65,49 @@ export class AppComponent {
             }
             this._title.setTitle(title);
         });
+        
     }
 
     isAdmin() {
         return this._auth.getRole().includes('ADMIN');
     }
 
+    isUser(){
+        return this._auth.getRole().includes('ROLE');
+    }
+
+    checkCurrentUser(){
+
+        if(this.currentUser){
+            return true;
+        }
+        else{
+            this._auth.currentUser.subscribe(user => {
+                this.currentUser = user;
+            });
+            return true;
+        }
+        return false;
+    }
+
     openAccountInfoModal() {
         this._modal.show(AccountInformationComponent, { initialState: { isModal: true } });
     }
 
-    logout() {
+    // logout() {
+    //     this._auth.logout();
+    // }
+
+    logout(): void {
         this._auth.logout();
+        this.authService.signOut().then(
+            data => {
+              this.tokenService.logOut();
+              this.loggedIn = false;
+            }
+        );
     }
 
+
+    
 }

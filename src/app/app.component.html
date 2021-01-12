@@ -30,6 +30,7 @@
           <div class="dropdown-menu dropdown-menu-right">
               <a routerLink="/login" class="dropdown-item">Login</a>
               <a routerLink="/register" class="dropdown-item">Register</a>
+              
           </div>
       </div>
     </div>
@@ -47,8 +48,10 @@
               <a routerLinkActive="active" routerLink="/accounts" *ngIf="isAdmin()" class="nav-item nav-link">Accounts</a>
               <a *ngIf="isAdmin()" routerLinkActive="active" routerLink="/clients" class="nav-item nav-link">Clients</a>
               <a routerLinkActive="active" routerLink="/operations" class="nav-item nav-link">Operations</a>
+              <a routerLinkActive="active" routerLink="/benefitsAudit" *ngIf="isAdmin()" class="nav-item nav-link">Benefits audit</a>
+              <a routerLinkActive="active" routerLink="/subscriptionsAudit" *ngIf="isAdmin()" class="nav-item nav-link">Subscriptions audit</a>
           </div>
-          <button mat-button (click)="logout()" *ngIf="currentUser" class="logout nav-item nav-link">Logout</button>
+          <button mat-button (click)="logout()" *ngIf="checkCurrentUser()" class="logout nav-item nav-link">Logout</button>
       </div>
   </div>
 </nav>

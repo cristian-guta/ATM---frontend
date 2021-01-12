@@ -21,7 +21,7 @@ import { MatListModule } from '@angular/material/list';
     declarations: [
         AuthenticationComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
     ],
     imports: [
         CommonModule,

@@ -38,9 +38,9 @@
         <ng-container  matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Action</th>
             <td mat-cell *matCellDef="let client" class="example-button-row">
-                <button mat-stroked-button *ngIf="!client.deactivate" (click)="deactivate(client)"
+                <button mat-stroked-button *ngIf="!client.status" (click)="deactivate(client)"
                         [disabled]="client.deleting"> Block</button>
-                <button mat-stroked-button *ngIf="client.deactivate" (click)="activate(client)"
+                <button mat-stroked-button *ngIf="client.status" (click)="activate(client)"
                         [disabled]="client.deleting"> Unblock</button>
             </td>
         </ng-container>

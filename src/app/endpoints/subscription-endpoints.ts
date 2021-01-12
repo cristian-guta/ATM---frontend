@@ -1,13 +1,13 @@
 import { Subscription } from '../models/subscription';
 
 export class SubscriptionEndpoints{
-    allAvailableSubscriptions = 'subscriptions';
-    currentSubscription = 'subscriptions/getSubscription';
-    cancelSubscription = 'subscriptions/cancelSubscription';
-    createSubscription = 'subscriptions/createSubscription';
-    deleteSubscription = 'subscriptions/deleteSubscription';
-    updateSubscription = 'subscriptions/updateSubscription';
-    activateSubscription = 'subscriptions/activateSubscription';
+    allAvailableSubscriptions = 'api/subscriptions';
+    currentSubscription = 'api/subscriptions/getSubscription';
+    cancelSubscription = 'api/subscriptions/cancelSubscription';
+    createSubscription = 'api/subscriptions/createSubscription';
+    deleteSubscription = 'api/subscriptions/deleteSubscription';
+    updateSubscription = 'api/subscriptions/updateSubscription';
+    activateSubscription = 'api/subscriptions/activateSubscription';
 
     getDelete(subscription: Subscription): string{
         return this.deleteSubscription + '/' + subscription.id;

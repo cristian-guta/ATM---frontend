@@ -32,5 +32,9 @@ export class ClientService {
     activateClient(client: Client){
         return this.rest.put(this.clientEnds.getActivateClient(client), client);
     }
+
+    googleLogin(){
+        return this.rest.get('login/oauth2/code/google');
+    }
 }
 

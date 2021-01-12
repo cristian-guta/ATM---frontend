@@ -8,6 +8,7 @@ import { switchMap, map } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AuthEndpoints } from 'src/app/endpoints/auth-endpoints';
 import { Client } from 'src/app/models/client';
+import { AuthProvider } from 'src/app/models/authProvider';
 
 export const uniqueUsername = (rest: RestService, time: number = 1000): AsyncValidatorFn => {
     return (control: AbstractControl): Observable<{ [key: string]: boolean } | null> => {
@@ -118,12 +119,13 @@ export class RegisterComponent implements OnInit {
                 username: this.username.value,
                 email: this.email.value,
                 password: this.password.value,
-                confirmPassword: this.confirmPassword.value
+                confirmPassword: this.confirmPassword.value,
+                authProvider: AuthProvider.local
             };
             this._rest.post(this._authEnds.register, registerInfo)
                 .subscribe(
                     result => {
-                        // this._auth.successfulLogin(result.token, '/accounts');
+
                         this.loading = false;
                         this._router.navigate(['/login']);
                     },

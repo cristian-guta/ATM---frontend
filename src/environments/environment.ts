@@ -4,9 +4,10 @@
 
 export const environment = {
   production: false,
-  serverLink: 'http://localhost:8080/api/',
+  serverLink: 'http://localhost:8080/',
   frontendDomain: '',
-  serverDomain: ''
+  serverDomain: '',
+  googleClientId: '1035830881982-s2er91ab97g2iugtbnsgi1s8c3scde6v.apps.googleusercontent.com'
 };
 
 /*

@@ -58,4 +58,8 @@ export class OperationsComponent implements OnInit {
     return this._auth.getRole().includes('ADMIN');
   }
 
+  isUser(){
+    return this._auth.getRole().includes('ROLE');
+}
+
 }

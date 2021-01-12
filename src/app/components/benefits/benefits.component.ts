@@ -29,9 +29,7 @@ export class BenefitsComponent implements OnInit {
 
   constructor(
     private _auth: AuthenticationService,
-    private benefitService: BenefitService,
-    private subscriptionService: SubscriptionService,
-    
+    private benefitService: BenefitService,    
   ) { }
 
   applyFilter(filterValue: string) {
@@ -41,31 +39,31 @@ export class BenefitsComponent implements OnInit {
   }
 
   ngOnInit() { 
-    if(!this.isAdmin()){
-      this.subscriptionService.getSubscription().subscribe((sub: Subscription) => {
-        this.benefits = new MatTableDataSource<Benefit>(sub.benefits);
+    this.getData(this.pageIndex, this.pageSize);
+  }
+
+  getData(index, size){
+    if(this.isAdmin()==false){  
+      this.benefitService.getBenefitsBySubscription(index, size).subscribe(result => {
+        this.benefits = result.content;
         this.benefits.paginator = this.paginator;
-        // this.benefits.data = sub.benefits;
+        this.length = result.totalElements;
       })
     }
     else{
-        this.getData(this.pageSize, this.pageIndex);
+      this.benefitService.getAllBenefits(index, size)
+        .subscribe(result => {
+          this.benefits = result.content;
+          this.benefits.paginator = this.paginator;
+          this.length = result.totalElements;
+       });
     }
-  }
-
-  getData(size, index){
-    this.benefitService.getAllBenefits(index, size)
-    .subscribe(result => {
-      this.benefits = result.content;
-      this.benefits.paginator = this.paginator;
-      this.length = result.totalElements;
-    });
   }
 
   handleRequest(event: any){
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.getData(this.pageSize, this.pageIndex);
+    this.getData(this.pageIndex, this.pageSize);
   }
 
   isAdmin() {
