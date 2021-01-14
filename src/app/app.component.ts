@@ -6,9 +6,9 @@ import { AuthenticationService } from './services/authentication.service';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
-import { ClientService } from './services/client.service';
 import { SocialAuthService } from 'angularx-social-login';
 import { TokenService } from './services/token.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -18,7 +18,7 @@ import { TokenService } from './services/token.service';
 })
 export class AppComponent{
     title = 'ATM - Project';
-    currentUser: any;
+    currentUser: Observable<any>;
     loginOrRegister = false;
     loggedIn: boolean;
 
@@ -30,20 +30,11 @@ export class AppComponent{
         private _route: ActivatedRoute,
         private _title: Title,
         private _modal: BsModalService,
-        private clientService: ClientService,
         private authService: SocialAuthService,
         private tokenService: TokenService
     ) {
-        this._auth.currentUser.subscribe(user => {
-            this.currentUser = user;
-            // console.log(user);
-        });
-
-        // this.clientService.getCurrentClient().subscribe(user => {
-        //     this.currentUser = user;
-        //     console.log("user: ")
-        //     console.log(user);
-        // })
+        this.currentUser = this._auth.currentUser;
+        console.log(this.currentUser);
 
         this._router.events.pipe(
             filter(event => event instanceof NavigationEnd),
